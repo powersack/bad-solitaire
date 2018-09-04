@@ -10,6 +10,15 @@ module.exports = function(grunt) {
             build: {
                 src: [
                     'src/js/vendor/jquery.min.js',
+                    'src/js/vendor/jquery-ui.min.js',
+                    'src/js/bs.js',
+                    'src/js/Card.js',
+                    'src/js/Deck.js',
+                    'src/js/Slot.js',
+                    'src/js/Board.js',
+                    'src/js/GUI.js',
+                    'src/js/Game.js',
+                    'src/js/bs.js',
                     'src/js/main.js'
                 ],
                 dest: 'dist/js/main.min.js'

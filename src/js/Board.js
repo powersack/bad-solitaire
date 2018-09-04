@@ -6,12 +6,18 @@
         self.deck = bs.newDeck();
         self.slots = [];
 
-        self.init();
+        self._init();
     };
 
-    Board.prototype.init = function () {
+    Board.prototype._init = function () {
+        var self = this;
+    };
+
+    Board.prototype.addDeck = function (cards) {
         var self = this;
         self.$el.append(self.deck.$el);
+        self.deck.addCards(cards);
+        return self;
     };
 
     Board.prototype.addSlots = function (n) {
@@ -19,10 +25,24 @@
         var i;
 
         for(i=0;i<n;i++){
-            var slot = bs.newSlot(i+1);
+            var slot = bs.newSlot(i, i+1);
             self.slots.push(slot);
             self.$el.append(slot.$el);
         }
+        return self;
+    };
+
+    Board.prototype.addInitialCardsToSlots = function (n) {
+        var self = this;
+        var i;
+        self.slots.forEach(function (slot) {
+            var initialCardsNumber = slot.initialCardsNumber;
+            var drawnCards = self.deck.drawCards(initialCardsNumber);
+            slot.addCards(drawnCards);
+            slot.revealLastCard();
+            slot.updateDraggable();
+        });
+        return self;
     };
 
     bs.newBoard = function (game) {

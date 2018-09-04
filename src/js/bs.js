@@ -3,6 +3,7 @@
         cards: {
             colors: 4,
             numbers: 13
-        }
+        },
+        slots: 7
     }
 };

@@ -2,12 +2,11 @@
     var GUI = function (game) {
         var self = this;
         self.$el = $('<div>', {'class': 'gui'});
-        self.game = game;
 
-        self.init();
+        self._init();
     };
 
-    GUI.prototype.init = function () {
+    GUI.prototype._init = function () {
         var self = this;
     };
 

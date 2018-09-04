@@ -1,3 +1,4 @@
 ;(function (bs, $) {
-    app = bs.newGame('app');
+    game = bs.newGame('game');
+    game.startGame();
 }(bs, jQuery));

@@ -89,7 +89,7 @@
     };
     Card.prototype.attachCards = function (cards) {
         var self = this;
-        self.attachedCards = self.attachedCards.concat(cards.reverse());
+        self.attachedCards = self.attachedCards.concat(cards);
     };
 
     Card.prototype.dettachCards = function () {

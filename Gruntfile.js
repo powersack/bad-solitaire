@@ -14,7 +14,6 @@ module.exports = function(grunt) {
                     'src/js/bs.js',
                     'src/js/Helpers.js',
                     'src/js/Card.js',
-                    // 'src/js/DragGroup.js',
                     'src/js/Slot.js',
                     'src/js/DeckSlot.js',
                     'src/js/FinalSlot.js',
@@ -22,7 +21,6 @@ module.exports = function(grunt) {
                     'src/js/Board.js',
                     'src/js/GUI.js',
                     'src/js/Game.js',
-                    'src/js/bs.js',
                     'src/js/main.js'
                 ],
                 dest: 'dist/js/main.min.js'

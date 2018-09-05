@@ -130,7 +130,7 @@
                 self.cards[i].disableDrag();
             }
             tmpCard = self.cards[i];
-            cards.unshift(self.cards[i]);
+            cards.push(self.cards[i]);
         }
 
         return self;

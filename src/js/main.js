@@ -1,4 +1,4 @@
 ;(function (bs, $) {
-    game = bs.newGame('game');
+    game = new bs.Game('game');
     game.startGame();
 }(bs, jQuery));

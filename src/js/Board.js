@@ -2,21 +2,37 @@
     var Board = function (game) {
         var self = this;
         self.$el = $('<div>', {'class': 'board'});
+        self.$top = $('<div>', {'class': 'board-top'});
+        self.$bottom = $('<div>', {'class': 'board-bottom'});
         self.game = game;
-        self.deck = bs.newDeck();
+        self.deck = new bs.Deck();
         self.slots = [];
+        self.finalSlots = [];
+        self.drawSlot = null;
+        self._slotID = 1;
 
         self._init();
     };
 
     Board.prototype._init = function () {
         var self = this;
+        self.$el.append(self.$top);
+        self.$el.append(self.$bottom);
+
+        self.deck.$el.click(function () {
+            var drawnCards = self.deck.drawCards(bs.opts.drawCards);
+            if(!drawnCards.length){
+                self.deck.addCards(self.drawSlot.cards);
+            } else {
+                self.drawSlot.addCards(drawnCards);
+            }
+        });
     };
 
     Board.prototype.addDeck = function (cards) {
         var self = this;
-        self.$el.append(self.deck.$el);
-        self.deck.addCards(cards);
+        self.$top.append(self.deck.$el);
+        self.deck.createCards(cards);
         return self;
     };
 
@@ -25,10 +41,34 @@
         var i;
 
         for(i=0;i<n;i++){
-            var slot = bs.newSlot(i, i+1);
+            var slot = new bs.Slot(self._slotID, i+1);
             self.slots.push(slot);
-            self.$el.append(slot.$el);
+            self.$bottom.append(slot.$el);
+            self._slotID++;
         }
+        return self;
+    };
+
+    Board.prototype.addFinalSlots = function (n) {
+        var self = this;
+        var i;
+
+        for(i=0;i<n;i++){
+            var slot = new bs.FinalSlot(self._slotID);
+            self.finalSlots.push(slot);
+            self.$top.append(slot.$el);
+            self._slotID++;
+        }
+        return self;
+    };
+
+
+    Board.prototype.addDrawSlot = function () {
+        var self = this;
+        var slot = new bs.DrawSlot(self._slotID);
+        self.$top.append(slot.$el);
+        self._slotID++;
+        self.drawSlot = slot;
         return self;
     };
 
@@ -45,7 +85,5 @@
         return self;
     };
 
-    bs.newBoard = function (game) {
-        return new Board(game);
-    };
+    bs.Board = Board;
 }(bs, jQuery));

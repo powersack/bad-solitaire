@@ -1,8 +1,16 @@
 .slot{
   position: relative;
-  //.unitize-height(@card-height + 10);
+  .unitize-min-height(@card-height + 10);
   .unitize-width(@card-width + 10);
   border: 1px solid greenyellow;
   .card{
+  }
+
+  &.ui-droppable-hover{
+    border-color: green;
+  }
+
+  &.draw-slot{
+
   }
 }

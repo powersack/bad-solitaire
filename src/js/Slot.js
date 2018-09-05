@@ -19,15 +19,29 @@
 
     Slot.prototype.onDrop = function (event, ui) {
         var self = this;
-        var $card = $(ui.draggable);
-        var card =  $card.data('card');
+        var $ui = $(ui.draggable);
+        var card = $ui.data('card');
         var lastCard = self.getCard(self.cards.length - 1);
-        console.info(card.slot.id, card.color, card.number, lastCard.color, lastCard.number);
-        if((card.color !== lastCard.color) && (card.number < lastCard.number)){
+        if(!lastCard){
             self.acceptCard(card);
+        } else if(card.slot && card.slot.id === self.id){
+            card.return();
         } else {
-            self.rejectCard(card);
+            if(self.checkCardFit(card, lastCard)){
+                self.acceptCard(card);
+            } else {
+                self.rejectCard(card);
+            }
         }
+
+    };
+
+    Slot.prototype.checkCardFit = function (card1, card2) {
+        var self = this;
+        if(!card1 || !card2 || card1.status !== 1 || card2.status !== 1) return false;
+        if(!self.cards.length) return true;
+        return (card1.color % 2 !== card2.color % 2) &&
+            ((card1.number === card2.number - 1) || (card1.number -1 === card2.number));
     };
 
     Slot.prototype.rejectCard = function (card) {
@@ -38,22 +52,42 @@
 
     Slot.prototype.acceptCard = function (card) {
         var self = this;
-
+        self.addCard(card);
+        if(card.attachedCards.length){
+            card.attachedCards.forEach(function (attachedCard) {
+                self.addCard(attachedCard);
+            });
+        }
+        if(card.slot){
+            card.slot.updateDraggable();
+        }
     };
 
     Slot.prototype.addCard = function (card) {
         var self = this;
+        card.return();
         if(card.slot){
-            //TODO: remove from slot
+            card.slot.removeCard(card);
+            card.slot.revealLastCard();
         }
         card.setSlot(self);
         self.cards.push(card);
         self.$el.append(card.$el);
+        self.updateDraggable();
         return self;
     };
 
     Slot.prototype.removeCard = function (card) {
         var self = this;
+        var i, removedCard;
+
+        for(i=0;i<self.cards.length;i++){
+            if(self.cards[i].id === card.id){
+                removedCard = self.cards.splice(i,1)[0];
+            }
+        }
+        self.updateDraggable();
+        return removedCard;
     };
 
     Slot.prototype.addCards = function (cards) {
@@ -79,17 +113,26 @@
 
     Slot.prototype.updateDraggable = function () {
         var self = this;
-        self.cards.forEach(function (card, index) {
-            if(index === self.cards.length -1){
-                card.enableDrag();
+        var i, tmpCard, cards = [];
+
+        for(i=self.cards.length - 1;i >= 0;i--){
+            self.cards[i].dettachCards();
+        }
+        for(i=self.cards.length - 1;i >= 0;i--){
+            cards.unshift(self.cards[i]);
+            if(i === self.cards.length -1){
+                self.cards[i].enableDrag();
+            } else if(self.checkCardFit(self.cards[i], tmpCard)){
+                self.cards[i].enableDrag();
+                self.cards[i].attachCards(cards);
             } else {
-                card.disableDrag();
+                self.cards[i].disableDrag();
             }
-        });
+            tmpCard = self.cards[i];
+        }
+
         return self;
     };
 
-    bs.newSlot = function (id, initialCardsNumber) {
-        return new Slot(id, initialCardsNumber);
-    };
+    bs.Slot = Slot;
 }(bs, jQuery));

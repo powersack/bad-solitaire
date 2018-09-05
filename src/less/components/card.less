@@ -2,7 +2,11 @@
   .unitize-height(@card-height);
   .unitize-width(@card-width);
   border: 1px solid gray;
+  background: linear-gradient(#ffffff, #dedede);
 
+  &.ui-draggable-dragging{
+    z-index: 1;
+  }
   &:not(.ui-draggable-dragging){
     .transition(all 0.3s);
   }

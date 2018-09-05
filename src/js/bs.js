@@ -4,6 +4,7 @@
             colors: 4,
             numbers: 13
         },
-        slots: 7
+        slots: 7,
+        drawCards: 3
     }
 };

@@ -10,7 +10,5 @@
         var self = this;
     };
 
-    bs.newGUI = function (game) {
-        return new GUI(game);
-    };
+    bs.GUI = GUI;
 }(bs, jQuery));

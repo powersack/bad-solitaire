@@ -18,7 +18,10 @@
         var self = this;
         self.$el.append(self.$top);
         self.$el.append(self.$bottom);
-
+        self._initEvents();
+    };
+    Board.prototype._initEvents = function () {
+        var self = this;
         self.deck.$el.click(function () {
             var drawnCards = self.deck.drawCards(bs.opts.drawCards);
             if(!drawnCards.length){

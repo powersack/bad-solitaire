@@ -10,7 +10,34 @@
     border-color: green;
   }
 
-  &.draw-slot{
+  &.play-slot{
+    .card{
+      .unitize(margin-top, (@card-height * -0.3333333));
+      &:first-child{
+        margin-top: 0;
+      }
+    }
+  }
 
+  &.draw-slot{
+    .clearfix;
+    .unitize-width(@card-width * 3 - 20);
+
+    .card{
+      float: left;
+      display: none;
+      &:nth-last-child(3){
+        display: block;
+        .unitize(margin-left, 0);
+      }
+      &:nth-last-child(2){
+        display: block;
+        .unitize(margin-left, @card-width * -1 + 30);
+      }
+      &:nth-last-child(1){
+        display: block;
+        .unitize(margin-left, @card-width * -1 + 30);
+      }
+    }
   }
 }

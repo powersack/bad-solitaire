@@ -13,7 +13,8 @@
         var self = this;
         self.$el.droppable({
             accept: '.card',
-            drop: self.onDrop.bind(self)
+            drop: self.onDrop.bind(self),
+            tolerance: 'touch'
         });
     };
 

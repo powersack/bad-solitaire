@@ -1,10 +1,9 @@
 ;(function (bs, $) {
-    var Board = function (game) {
+    var Board = function () {
         var self = this;
         self.$el = $('<div>', {'class': 'board'});
         self.$top = $('<div>', {'class': 'board-top'});
         self.$bottom = $('<div>', {'class': 'board-bottom'});
-        self.game = game;
         self.deck = new bs.DeckSlot();
         self.slots = [];
         self.finalSlots = [];
@@ -57,10 +56,10 @@
         var i;
 
         for(i=0;i<n;i++){
-            var slot = new bs.Slot(self._slotID, i+1);
+            var slot = new bs.Slot(bs._id.slot, i+1);
             self.slots.push(slot);
             self.$bottom.append(slot.$el);
-            self._slotID++;
+            bs._id.slot++;
         }
         return self;
     };
@@ -70,10 +69,10 @@
         var i;
 
         for(i=0;i<n;i++){
-            var slot = new bs.FinalSlot(self._slotID);
+            var slot = new bs.FinalSlot(bs._id.slot);
             self.finalSlots.push(slot);
             self.$top.append(slot.$el);
-            self._slotID++;
+            bs._id.slot++;
         }
         return self;
     };
@@ -81,9 +80,9 @@
 
     Board.prototype.addDrawSlot = function () {
         var self = this;
-        var slot = new bs.DrawSlot(self._slotID);
+        var slot = new bs.DrawSlot(bs._id.slot);
         self.$top.append(slot.$el);
-        self._slotID++;
+        bs._id.slot++;
         self.drawSlot = slot;
         return self;
     };

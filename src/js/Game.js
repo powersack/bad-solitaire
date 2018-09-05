@@ -2,7 +2,7 @@
     var Game = function (containerId) {
         var self = this;
         self.$container = $('#'+containerId);
-        self.board = new bs.Board(self);
+        self.board = new bs.Board();
         self.GUI = new bs.GUI(self);
 
         self._init();

@@ -24,8 +24,8 @@
 
         for(c = 0; c < cards.colors; c++){
             for(n = 0; n < cards.numbers; n++) {
-                self.cards.push(new bs.Card(self._cardsID, c, n));
-                self._cardsID++;
+                self.cards.push(new bs.Card(bs._id.card, c, n));
+                bs._id.card++;
             }
         }
         self.$el.removeClass('deck-empty');

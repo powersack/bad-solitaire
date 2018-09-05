@@ -33,8 +33,8 @@
                 start: self.onDragStart.bind(self),
                 stop: self.onDragStop.bind(self)})
             .draggable('disable');
-        self.$number = $('<div>', {'class': 'card-number', 'html': self.number});
-        self.$color = $('<div>', {'class': 'card-color', 'html': ''});
+        self.$number = $('<div>', {'class': 'card-number', 'html': bs.opts.cards.numberNames[self.number]});
+        self.$color = $('<div>', {'class': 'card-color', 'html': bs.opts.cards.colorNames[self.color]});
     };
 
     Card.prototype.onDrag = function (e,ui) {

@@ -1,10 +1,11 @@
 
-.loop(@counter) when (@counter > 0) {
-  .loop((@counter - 1));
+.card-index(@counter) when (@counter > 0) {
+  .card-index((@counter - 1));
   &:nth-last-child(@{counter}){
     z-index: (100 - @counter);
   }
 }
+
 .card{
   .unitize-height(@card-height);
   .unitize-width(@card-width);
@@ -13,13 +14,16 @@
   background: linear-gradient(#0057b4, #002871);
   font-weight: bold;
   user-select: none;
+  cursor: grab;
+
+  .card-color,
   .card-number{
-    .unitize(font-size, 18);
+    .unitize(font-size, 20);
     z-index: -1;
   }
 
   &{
-    .loop(5); // launch the loop
+    .card-index(90); // launch the loop
   }
 
   &.c0,
@@ -32,29 +36,30 @@
     background: linear-gradient(#7e0200, #ff0500);
   }
 
-  &:after{
-    .unitize(font-size, 20);
-    z-index: -1;
-  }
-
-  &.c0:after{
-    content: "\2660";
-  }
-
-  &.c1:after{
-    content: "\2665";
-  }
-
-  &.c2:after{
-    content: "\2663";
-  }
-
-  &.c3:after{
-    content: "\2666";
-  }
+  //&:after{
+  //  .unitize(font-size, 20);
+  //  z-index: -1;
+  //}
+  //
+  //&.c0:after{
+  //  content: "\2660";
+  //}
+  //
+  //&.c1:after{
+  //  content: "\2665";
+  //}
+  //
+  //&.c2:after{
+  //  content: "\2663";
+  //}
+  //
+  //&.c3:after{
+  //  content: "\2666";
+  //}
 
   &.ui-draggable-dragging{
     z-index: 101;
+    cursor: grabbing;
   }
   &:not(.ui-draggable-dragging){
     .transition(all 0.3s);

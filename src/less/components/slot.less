@@ -1,16 +1,28 @@
 .slot{
   position: relative;
-  .unitize-min-height(@card-height + 10);
-  .unitize-width(@card-width + 10);
+  .unitize-height(@card-height);
+  .unitize-width(@card-width);
+  .unitize-padding(10,10);
   border: 1px solid greenyellow;
-  .card{
-  }
+  .unitize-margin(0,20,20,0);
 
   &.ui-droppable-hover{
     border-color: green;
   }
 
+  &.deck{
+    position: relative;
+    float: left;
+    border: 1px solid blue;
+
+    .card{
+      display: none;
+    }
+  }
+
   &.play-slot{
+    height: auto;
+    .unitize-min-height(@card-height);
     .card{
       .unitize(margin-top, (@card-height * -0.3333333));
       &:first-child{
@@ -21,7 +33,7 @@
 
   &.draw-slot{
     .clearfix;
-    .unitize-width(@card-width * 3 - 20);
+    .unitize-width(@card-width * 3 - 30);
 
     .card{
       float: left;
@@ -37,6 +49,15 @@
       &:nth-last-child(1){
         display: block;
         .unitize(margin-left, @card-width * -1 + 30);
+      }
+    }
+  }
+
+  &.final-slot{
+    .card{
+      display: none;
+      &:nth-last-child(1){
+        display: block;
       }
     }
   }

@@ -16,7 +16,7 @@ module.exports = function(grunt) {
                     'src/js/Card.js',
                     // 'src/js/DragGroup.js',
                     'src/js/Slot.js',
-                    'src/js/Deck.js',
+                    'src/js/DeckSlot.js',
                     'src/js/FinalSlot.js',
                     'src/js/DrawSlot.js',
                     'src/js/Board.js',

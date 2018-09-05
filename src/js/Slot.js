@@ -52,9 +52,11 @@
     Slot.prototype.acceptCard = function (card) {
         var self = this;
         if(card.attachedCards.length){
-            self.addCards(card.attachedCards);
+            var cards = card.attachedCards.concat(card);
+            self.addCards(cards);
+        } else {
+            self.addCard(card);
         }
-        self.addCard(card);
         if(card.slot){
             card.slot.updateDraggable();
         }

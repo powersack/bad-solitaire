@@ -5,7 +5,7 @@
         self.$top = $('<div>', {'class': 'board-top'});
         self.$bottom = $('<div>', {'class': 'board-bottom'});
         self.game = game;
-        self.deck = new bs.Deck();
+        self.deck = new bs.DeckSlot();
         self.slots = [];
         self.finalSlots = [];
         self.drawSlot = null;
@@ -19,7 +19,20 @@
         self.$el.append(self.$top);
         self.$el.append(self.$bottom);
         self._initEvents();
+        self.$el.droppable({
+            accept: '.card',
+            drop: self.onDrop.bind(self)
+        });
     };
+
+    Board.prototype.onDrop = function (event, ui) {
+        var self = this;
+        var $ui = $(ui.draggable);
+        var card = $ui.data('card');
+        card.return();
+    };
+
+
     Board.prototype._initEvents = function () {
         var self = this;
         self.deck.$el.click(function () {

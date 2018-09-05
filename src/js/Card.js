@@ -68,6 +68,7 @@
     };
 
     Card.prototype.return = function () {
+        console.log('re')
         var self = this;
         self.$el.css({
             top: 0,
@@ -88,7 +89,7 @@
     };
     Card.prototype.attachCards = function (cards) {
         var self = this;
-        self.attachedCards = self.attachedCards.concat(cards);
+        self.attachedCards = self.attachedCards.concat(cards.reverse());
     };
 
     Card.prototype.dettachCards = function () {

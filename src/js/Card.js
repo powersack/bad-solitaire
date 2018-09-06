@@ -1,7 +1,7 @@
 ;(function (bs, $) {
-    var Card = function (id, color, number) {
+    var Card = function (color, number) {
         var self = this;
-        self.id = id;
+        self.id = bs._id.card;
         self.$el = $('<div>', {'class': 'card'});
         self._color = color;
         self._number = number;
@@ -9,6 +9,7 @@
         self.slot = null;
         self.attachedCards = [];
 
+        bs._id.card++;
         self._init();
     };
 
@@ -33,8 +34,8 @@
                 start: self.onDragStart.bind(self),
                 stop: self.onDragStop.bind(self)})
             .draggable('disable');
-        self.$number = $('<div>', {'class': 'card-number', 'html': bs.opts.cards.numberNames[self.number]});
-        self.$color = $('<div>', {'class': 'card-color', 'html': bs.opts.cards.colorNames[self.color]});
+        self.$number = $('<div>', {'class': 'card-number', 'html': bs.strings.cards.numberNames[self.number]});
+        self.$color = $('<div>', {'class': 'card-color', 'html': bs.strings.cards.colorNames[self.color]});
     };
 
     Card.prototype.onDrag = function (e,ui) {
@@ -68,7 +69,6 @@
     };
 
     Card.prototype.return = function () {
-        console.log('re')
         var self = this;
         self.$el.css({
             top: 0,

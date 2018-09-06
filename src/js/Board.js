@@ -4,11 +4,11 @@
         self.$el = $('<div>', {'class': 'board'});
         self.$top = $('<div>', {'class': 'board-top'});
         self.$bottom = $('<div>', {'class': 'board-bottom'});
-        self.deck = new bs.DeckSlot();
+        self.deck = null;
         self.slots = [];
         self.finalSlots = [];
         self.drawSlot = null;
-        self._slotID = 1;
+        self._checkWin = null;
 
         self._init();
     };
@@ -18,10 +18,36 @@
         self.$el.append(self.$top);
         self.$el.append(self.$bottom);
         self._initEvents();
+    };
+
+    Board.prototype._initEvents = function () {
+        var self = this;
         self.$el.droppable({
             accept: '.card',
             drop: self.onDrop.bind(self)
         });
+    };
+
+    Board.prototype.setCheckWinFunc = function (checkWin) {
+        var self = this;
+        self._checkWin = checkWin;
+    };
+
+    Board.prototype.checkWin = function (checkWin) {
+        var self = this;
+        if(typeof self._checkWin === "function"){
+            self._checkWin();
+        }
+    };
+    Board.prototype.clearBoard = function (event, ui) {
+        var self = this;
+
+        self.$top.html('');
+        self.$bottom.html('');
+        self.deck = null;
+        self.slots = [];
+        self.finalSlots = [];
+        self.drawSlot = null;
     };
 
     Board.prototype.onDrop = function (event, ui) {
@@ -31,73 +57,44 @@
         card.return();
     };
 
-
-    Board.prototype._initEvents = function () {
+    Board.prototype.addDeck = function (deck) {
         var self = this;
-        self.deck.$el.click(function () {
-            var drawnCards = self.deck.drawCards(bs.opts.drawCards);
-            if(!drawnCards.length){
-                self.deck.addCards(self.drawSlot.cards);
-            } else {
-                self.drawSlot.addCards(drawnCards);
-            }
-        });
-    };
-
-    Board.prototype.addDeck = function (cards) {
-        var self = this;
+        self.deck = deck;
         self.$top.append(self.deck.$el);
-        self.deck.createCards(cards);
         return self;
     };
 
-    Board.prototype.addSlots = function (n) {
+    Board.prototype.addSlots = function (slots) {
         var self = this;
-        var i;
-
-        for(i=0;i<n;i++){
-            var slot = new bs.Slot(bs._id.slot, i+1);
+        slots.forEach(function (slot) {
             self.slots.push(slot);
             self.$bottom.append(slot.$el);
-            bs._id.slot++;
-        }
+        });
         return self;
     };
 
-    Board.prototype.addFinalSlots = function (n) {
+    Board.prototype.addFinalSlots = function (slots) {
         var self = this;
-        var i;
-
-        for(i=0;i<n;i++){
-            var slot = new bs.FinalSlot(bs._id.slot);
+        slots.forEach(function (slot) {
             self.finalSlots.push(slot);
             self.$top.append(slot.$el);
-            bs._id.slot++;
-        }
+            slot.$el.on('check:win', self.checkWin.bind(self));
+        });
         return self;
     };
-
 
     Board.prototype.addDrawSlot = function () {
         var self = this;
-        var slot = new bs.DrawSlot(bs._id.slot);
+        var slot = new bs.DrawSlot();
         self.$top.append(slot.$el);
-        bs._id.slot++;
         self.drawSlot = slot;
         return self;
     };
 
-    Board.prototype.addInitialCardsToSlots = function (n) {
+
+    Board.prototype.win = function () {
         var self = this;
-        var i;
-        self.slots.forEach(function (slot) {
-            var initialCardsNumber = slot.initialCardsNumber;
-            var drawnCards = self.deck.drawCards(initialCardsNumber);
-            slot.addCards(drawnCards);
-            slot.revealLastCard();
-            slot.updateDraggable();
-        });
-        return self;
+        alert('you win');
     };
 
     bs.Board = Board;

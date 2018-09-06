@@ -1,11 +1,11 @@
 ;(function (bs, $) {
-    var Slot = function (id, initialCardsNumber) {
+    var Slot = function () {
         var self = this;
-        self.id = id;
+        self.id = bs._id.slot;
         self.$el = $('<div>', {'class': 'slot play-slot'});
-        self.initialCardsNumber = initialCardsNumber;
         self.cards = [];
 
+        bs._id.slot++;
         self._init();
     };
 
@@ -23,6 +23,7 @@
         var $ui = $(ui.draggable);
         var card = $ui.data('card');
         var lastCard = self.getCard(self.cards.length - 1);
+        //TODO: RULE
         if(!lastCard){
             self.acceptCard(card);
         } else if(card.slot && card.slot.id === self.id){
@@ -37,6 +38,7 @@
 
     };
 
+    //TODO: RULE
     Slot.prototype.checkCardFit = function (card1, card2) {
         var self = this;
         if(!card1 || !card2 || card1.status !== 1 || card2.status !== 1) return false;
@@ -47,7 +49,6 @@
     Slot.prototype.rejectCard = function (card) {
         var self = this;
         card.return();
-
     };
 
     Slot.prototype.acceptCard = function (card) {
@@ -57,9 +58,6 @@
             self.addCards(cards);
         } else {
             self.addCard(card);
-        }
-        if(card.slot){
-            card.slot.updateDraggable();
         }
     };
 
@@ -74,6 +72,8 @@
         self.cards.push(card);
         self.$el.append(card.$el);
         self.updateDraggable();
+
+        self.$el.trigger('check:win');
         return self;
     };
 
@@ -93,7 +93,6 @@
 
     Slot.prototype.addCards = function (cards) {
         var self = this;
-        // cards = cards.reverse();
         for(var i=cards.length-1;i>-1;i--){
             self.addCard(cards[i]);
         }
@@ -126,6 +125,7 @@
             } else if(self.checkCardFit(tmpCard, self.cards[i])){
                 self.cards[i].enableDrag();
                 self.cards[i].attachCards(cards);
+                console.log('spider add to final slot if 12 and all same color: ' + cards.length)
             } else {
                 self.cards[i].disableDrag();
             }

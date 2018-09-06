@@ -1,9 +1,8 @@
 ;(function (bs, $) {
     var DeckSlot = function () {
         var self = this;
-        bs.Slot.call(self, -1, 0);
+        bs.Slot.call(self);
         self.$el = $('<div>', {'class': 'slot deck'});
-        self._cardsID = 1;
         self._init();
     };
 
@@ -24,8 +23,7 @@
 
         for(c = 0; c < cards.colors; c++){
             for(n = 0; n < cards.numbers; n++) {
-                self.cards.push(new bs.Card(bs._id.card, c, n));
-                bs._id.card++;
+                self.cards.push(new bs.Card(c, n));
             }
         }
         self.$el.removeClass('deck-empty');
@@ -48,6 +46,11 @@
         if(!self.cards.length) self.$el.addClass('deck-empty');
         return drawnCards;
     };
+
+    DeckSlot.prototype.updateDraggable = function (n) {
+    };
+
+
 
     bs.DeckSlot = DeckSlot;
 }(bs, jQuery));

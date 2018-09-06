@@ -4,12 +4,15 @@
         self.$container = $('#'+containerId);
         self.board = new bs.Board();
         self.GUI = new bs.GUI(self);
+        self.gameType = null;
 
         self._init();
     };
 
     Game.prototype._init = function () {
         var self = this;
+        self.$container.append(self.GUI.$topBar);
+        self.$container.append(self.GUI.$menu);
         self.$container.append(self.board.$el);
     };
 
@@ -18,17 +21,24 @@
 
     };
 
-    Game.prototype.startGame = function () {
+    Game.prototype.startKlondike = function () {
         var self = this;
-        self.board.addDeck(bs.opts.cards);
-        self.board.addDrawSlot();
-        self.board.addFinalSlots(bs.opts.cards.colors);
-        self.board.addSlots(bs.opts.slots);
-        self.board.deck.shuffle();
-        self.board.addInitialCardsToSlots();
+        self.board.clearBoard();
+        self.gameType = new bs.Klondike(self);
+        self.gameType.startGame();
     };
 
+    Game.prototype.startSpider = function () {
+        var self = this;
+        self.board.clearBoard();
+        self.gameType = new bs.Spider(self);
+        self.gameType.startGame();
+    };
 
+    Game.prototype.win = function () {
+        var self = this;
+        self.board
+    };
 
     bs.Game = Game;
 }(bs, jQuery));

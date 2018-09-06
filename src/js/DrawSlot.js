@@ -2,7 +2,7 @@
 
     var DrawSlot = function (id) {
         var self = this;
-        bs.Slot.call(self, id, 0);
+        bs.Slot.call(self, id);
         self.$el = $('<div>', {'class': 'slot draw-slot'});
         self._init();
     };
@@ -16,14 +16,6 @@
         var card = $ui.data('card');
         self.rejectCard(card);
     };
-
-    // DrawSlot.prototype.reset = function () {
-    //     var self = this;
-    //     self.cards.forEach(function (card) {
-    //         card.hide();
-    //     });
-    //     self.cards.reverse();
-    // };
 
     DrawSlot.prototype.updateDraggable = function () {
         var self = this;

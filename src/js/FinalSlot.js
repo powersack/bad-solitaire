@@ -1,8 +1,8 @@
 ;(function (bs, $) {
 
-    var FinalSlot = function (id) {
+    var FinalSlot = function () {
         var self = this;
-        bs.Slot.call(self, id, Number.MAX_VALUE);
+        bs.Slot.call(self);
         self.$el = $('<div>', {'class': 'slot final-slot'});
         self._init();
     };

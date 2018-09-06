@@ -18,8 +18,11 @@ module.exports = function(grunt) {
                     'src/js/DeckSlot.js',
                     'src/js/FinalSlot.js',
                     'src/js/DrawSlot.js',
+                    'src/js/SpiderSlot.js',
                     'src/js/Board.js',
                     'src/js/GUI.js',
+                    'src/js/Klondike.js',
+                    'src/js/Spider.js',
                     'src/js/Game.js',
                     'src/js/main.js'
                 ],

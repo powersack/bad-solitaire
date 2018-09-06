@@ -9,12 +9,14 @@
 .card{
   .unitize-height(@card-height);
   .unitize-width(@card-width);
-  border: 1px solid gray;
-  color: #ffffff;
-  background: linear-gradient(#0057b4, #002871);
+  border: 1px solid grey;
+  .unitize(border-radius,5);
+  color: @card-symbol-color;
+  background: linear-gradient(@card-backside, darken(@card-backside, 40%));
   font-weight: bold;
   user-select: none;
   cursor: grab;
+  .unitize-padding(3,5);
 
   .card-color,
   .card-number{
@@ -28,14 +30,15 @@
 
   &.c0,
   &.c2{
-    background: linear-gradient(#000000, #5a5a5a);
+    background: linear-gradient(@card-black, lighten(@card-black, 30%));
   }
 
   &.c1,
   &.c3{
-    background: linear-gradient(#7e0200, #ff0500);
+    background: linear-gradient(@card-red, lighten(@card-red, 30%));
   }
 
+  //unicode symbols
   //&:after{
   //  .unitize(font-size, 20);
   //  z-index: -1;

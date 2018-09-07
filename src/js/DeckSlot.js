@@ -44,6 +44,7 @@
             drawnCards.push(self.cards.pop());
         }
         if(!self.cards.length) self.$el.addClass('deck-empty');
+        self.$el.trigger('draw');
         return drawnCards;
     };
 

@@ -87,7 +87,7 @@
 
         for(i=0;i<n;i++){
             var slot = new bs.klondike.FinalSlot();
-            slot.$el.on('add:card', self._checkWin.bind(self));
+            slot.$el.on('addcard', self._checkWin.bind(self));
             slots.push(slot);
         }
         return slots;

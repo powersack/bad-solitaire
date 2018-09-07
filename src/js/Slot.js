@@ -43,15 +43,12 @@
     Slot.prototype.checkCardFit = function (card1, card2) {
         return true;
         // implement rule
-        // var self = this;
-        // if(!card1 || !card2 || card1.status !== 1 || card2.status !== 1) return false;
-        // if(!self.cards.length) return true;
-        // return (card1.color % 2 !== card2.color % 2) && (card1.number === card2.number - 1) ;
     };
 
     Slot.prototype.rejectCard = function (card) {
         var self = this;
         card.return();
+        self.$el.trigger('reject');
     };
 
     Slot.prototype.acceptCard = function (card) {
@@ -62,6 +59,7 @@
         } else {
             self.addCard(card);
         }
+        self.$el.trigger('accept');
     };
 
     Slot.prototype.addCard = function (card) {
@@ -76,7 +74,7 @@
         self.$el.append(card.$el);
         self.updateDraggable();
 
-        self.$el.trigger('add:card', [card]);
+        self.$el.trigger('addcard', [card]);
         return self;
     };
 
@@ -91,7 +89,7 @@
             }
         }
         self.updateDraggable();
-        self.$el.trigger('remove:card', [card]);
+        self.$el.trigger('removecard', [card]);
         return removedCard;
     };
 

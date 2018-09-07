@@ -36,6 +36,7 @@
             .draggable('disable');
         self.$number = $('<div>', {'class': 'card-number', 'html': bs.strings.cards.numberNames[self.number]});
         self.$color = $('<div>', {'class': 'card-color', 'html': bs.strings.cards.colorNames[self.color]});
+        self.$el.trigger('init');
     };
 
     Card.prototype.onDrag = function (e,ui) {
@@ -47,6 +48,7 @@
                 left: ui.position.left
             });
         });
+        self.$el.trigger('drag');
     };
 
     Card.prototype.onDragStart = function (e,ui) {
@@ -54,6 +56,7 @@
         self.attachedCards.forEach(function (card) {
             card.$el.addClass('ui-draggable-dragging');
         });
+        self.$el.trigger('dragstart');
     };
 
     Card.prototype.onDragStop = function (e,ui) {
@@ -81,6 +84,7 @@
                 left: 0
             });
         });
+        self.$el.trigger('return', [self, self.attachedCards]);
     };
 
     Card.prototype.attachCard = function (card) {
@@ -104,6 +108,7 @@
         self.$el.addClass('c'+self.color);
         self.$el.addClass('n'+self.number);
         self._appendValues();
+        self.$el.trigger('reveal');
         return self;
     };
 
@@ -114,6 +119,7 @@
         self.$el.removeClass('c'+self.color);
         self.$el.removeClass('n'+self.number);
         self._removeValues();
+        self.$el.trigger('hide');
         return self;
     };
 

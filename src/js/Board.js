@@ -36,6 +36,7 @@
         self.$center.html('');
         self.slots = {};
         self.deck = null;
+        self.$el.trigger('clear');
     };
 
     Board.prototype.onDrop = function (event, ui) {
@@ -43,6 +44,7 @@
         var $ui = $(ui.draggable);
         var card = $ui.data('card');
         card.return();
+        self.$el.trigger('drop');
     };
 
     Board.prototype.addSlots = function (slots, type, position) {

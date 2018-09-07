@@ -15,6 +15,7 @@
         var $ui = $(ui.draggable);
         var card = $ui.data('card');
         self.rejectCard(card);
+        self.$el.trigger('drop');
     };
 
     DrawSlot.prototype.updateDraggable = function () {

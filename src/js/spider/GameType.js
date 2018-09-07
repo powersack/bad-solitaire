@@ -21,7 +21,6 @@
 
     GameType.prototype._init = function () {
         var self = this;
-        // self.board.$el.addClass('gametype-spider');
     };
 
     GameType.prototype.setOpts = function (opts) {

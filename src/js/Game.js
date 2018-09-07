@@ -1,24 +1,20 @@
 ;(function (bs, $) {
-    var Game = function (containerId) {
+    var Game = function ($el) {
         var self = this;
-        self.$container = $('#'+containerId);
+        self.$el = $el;
         self.board = new bs.Board();
         self.GUI = new bs.GUI(self);
         self.gameType = null;
+
 
         self._init();
     };
 
     Game.prototype._init = function () {
         var self = this;
-        self.$container.append(self.GUI.$topBar);
-        self.$container.append(self.GUI.$menu);
-        self.$container.append(self.board.$el);
-    };
-
-    Game.prototype.start = function () {
-        var self = this;
-
+        self.$el.append(self.GUI.$topBar);
+        self.$el.append(self.GUI.$menu);
+        self.$el.append(self.board.$el);
     };
 
     Game.prototype.startKlondike = function () {

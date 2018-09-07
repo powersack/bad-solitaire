@@ -11,6 +11,7 @@ module.exports = function(grunt) {
                 src: [
                     'src/js/vendor/jquery.min.js',
                     'src/js/vendor/jquery-ui.min.js',
+                    'src/js/vendor/jquery.ui.touch-punch.js',
                     'src/js/bs.js',
                     'src/js/Helpers.js',
                     'src/js/Card.js',

@@ -8,7 +8,7 @@
 
   display: flex;
   align-items: center;
-  z-index: 500;
+  z-index: @menu-z;
 
   .menu-inner{
     margin: 0 auto;
@@ -20,6 +20,8 @@
   }
 
   .button{
+    display: block;
     .unitize-padding(5,15);
+    .unitize-margin(0,20);
   }
 }

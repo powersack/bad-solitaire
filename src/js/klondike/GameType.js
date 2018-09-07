@@ -14,7 +14,6 @@
         var self = this;
         self.game = game;
         self.opts = DEFAULTS;
-        // self.board.$el.addClass('gametype-klondike');
 
         self.setOpts(opts);
         self._init();
@@ -41,7 +40,8 @@
         var self = this;
         var board = self.game.board;
         board.addDeck(self._createDeck());
-        board.addDrawSlot();
+        // board.addDrawSlot();
+        board.addSlots([new bs.DrawSlot()], 'draw', 'top');
         board.addSlots(self._createFinalSlots(self.opts.cards.colors), 'final', 'top');
         board.addSlots(self._createSlots(self.opts.slots), 'play', 'center');
         board.deck.shuffle();
@@ -63,7 +63,7 @@
             if(!drawnCards.length){
                 deck.addCards(self.game.board.slots.draw[0].cards);
             } else {
-                self.game.board.drawSlot.addCards(drawnCards);
+                self.game.board.slots.draw[0].addCards(drawnCards);
             }
         });
 

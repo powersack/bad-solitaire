@@ -8,7 +8,6 @@
 
         self.slots = {};
         self.deck = null;
-        self.drawSlot = null;
 
         self._init();
     };
@@ -37,7 +36,6 @@
         self.$center.html('');
         self.slots = {};
         self.deck = null;
-        self.drawSlot = null;
     };
 
     Board.prototype.onDrop = function (event, ui) {
@@ -67,14 +65,6 @@
                     self.$bottom.append(slot.$el);
             }
         });
-        return self;
-    };
-
-    Board.prototype.addDrawSlot = function () {
-        var self = this;
-        var slot = new bs.DrawSlot();
-        self.$top.append(slot.$el);
-        self.drawSlot = slot;
         return self;
     };
 

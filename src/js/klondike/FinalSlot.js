@@ -1,4 +1,5 @@
 ;(function (bs, $) {
+    if(!bs.klondike) bs.klondike = {};
 
     var FinalSlot = function () {
         var self = this;
@@ -38,5 +39,5 @@
 
 
 
-    bs.FinalSlot = FinalSlot;
+    bs.klondike.FinalSlot = FinalSlot;
 }(bs, jQuery));

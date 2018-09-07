@@ -37,7 +37,12 @@
                 self.hideMenu();
             });
 
-        $inner.append($startKlondike, $startSpider);
+        var $close = $('<button>', {'class': 'button', 'html': 'schliessen'})
+            .click(function () {
+                self.hideMenu();
+            });
+
+        $inner.append($startKlondike, $startSpider, $close);
         self.$menu.append($inner);
     };
 

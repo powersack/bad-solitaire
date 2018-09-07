@@ -16,6 +16,7 @@
             drop: self.onDrop.bind(self),
             tolerance: 'touch'
         });
+        self.$el.trigger('init');
     };
 
     Slot.prototype.onDrop = function (event, ui) {
@@ -36,14 +37,16 @@
             }
         }
 
+        self.$el.trigger('drop');
     };
 
-    //TODO: RULE
     Slot.prototype.checkCardFit = function (card1, card2) {
-        var self = this;
-        if(!card1 || !card2 || card1.status !== 1 || card2.status !== 1) return false;
-        if(!self.cards.length) return true;
-        return (card1.color % 2 !== card2.color % 2) && (card1.number === card2.number - 1) ;
+        return true;
+        // implement rule
+        // var self = this;
+        // if(!card1 || !card2 || card1.status !== 1 || card2.status !== 1) return false;
+        // if(!self.cards.length) return true;
+        // return (card1.color % 2 !== card2.color % 2) && (card1.number === card2.number - 1) ;
     };
 
     Slot.prototype.rejectCard = function (card) {
@@ -73,7 +76,7 @@
         self.$el.append(card.$el);
         self.updateDraggable();
 
-        self.$el.trigger('check:win');
+        self.$el.trigger('add:card', [card]);
         return self;
     };
 
@@ -88,6 +91,7 @@
             }
         }
         self.updateDraggable();
+        self.$el.trigger('remove:card', [card]);
         return removedCard;
     };
 
@@ -125,7 +129,6 @@
             } else if(self.checkCardFit(tmpCard, self.cards[i])){
                 self.cards[i].enableDrag();
                 self.cards[i].attachCards(cards);
-                console.log('spider add to final slot if 12 and all same color: ' + cards.length)
             } else {
                 self.cards[i].disableDrag();
             }
@@ -133,6 +136,7 @@
             cards.push(self.cards[i]);
         }
 
+        self.$el.trigger('update');
         return self;
     };
 

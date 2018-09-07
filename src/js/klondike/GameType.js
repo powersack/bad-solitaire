@@ -1,4 +1,5 @@
 ;(function (bs, $) {
+    if(!bs.klondike) bs.klondike = {};
     var DEFAULTS = {
         cards: {
             colors: 4,
@@ -9,7 +10,7 @@
     };
 
 
-    var Klondike = function (game, opts) {
+    var GameType = function (game, opts) {
         var self = this;
         self.game = game;
         self.opts = DEFAULTS;
@@ -19,11 +20,11 @@
         self._init();
     };
 
-    Klondike.prototype._init = function () {
+    GameType.prototype._init = function () {
         var self = this;
     };
 
-    Klondike.prototype.setOpts = function (opts) {
+    GameType.prototype.setOpts = function (opts) {
         if(!opts) return;
         var self = this;
         self.opts = {
@@ -36,30 +37,23 @@
         }
     };
 
-    Klondike.prototype.startGame = function () {
+    GameType.prototype.startGame = function () {
         var self = this;
         var board = self.game.board;
         board.addDeck(self._createDeck());
         board.addDrawSlot();
-        board.addFinalSlots(self._createFinalSlots(self.opts.cards.colors));
-        board.addSlots(self._createSlots(self.opts.slots));
+        board.addSlots(self._createFinalSlots(self.opts.cards.colors), 'final', 'top');
+        board.addSlots(self._createSlots(self.opts.slots), 'play', 'center');
         board.deck.shuffle();
 
-        board.slots.forEach(function (slot, index) {
+        board.slots.play.forEach(function (slot, index) {
             var drawnCards = board.deck.drawCards(index + 1);
             slot.addCards(drawnCards);
             slot.revealLastCard();
         });
-
-        board.setCheckWinFunc(function () {
-            var check = board.finalSlots.every(function (slot) {
-                return slot.cards.length === 13
-            });
-            if(check) self.game.win();
-        });
     };
 
-    Klondike.prototype._createDeck = function () {
+    GameType.prototype._createDeck = function () {
         var self = this;
         var deck = new bs.DeckSlot();
 
@@ -67,7 +61,7 @@
         deck.$el.click(function () {
             var drawnCards = deck.drawCards(self.opts.drawCards);
             if(!drawnCards.length){
-                deck.addCards(self.game.board.drawSlot.cards);
+                deck.addCards(self.game.board.slots.draw[0].cards);
             } else {
                 self.game.board.drawSlot.addCards(drawnCards);
             }
@@ -76,27 +70,39 @@
         return deck;
     };
 
-    Klondike.prototype._createSlots = function (n) {
+    GameType.prototype._createSlots = function (n) {
         var self = this;
         var i, slots = [];
 
         for(i=0;i<n;i++){
-            slots.push(new bs.Slot());
+            slots.push(new bs.klondike.Slot());
         }
         return slots;
     };
 
 
-    Klondike.prototype._createFinalSlots = function (n) {
+    GameType.prototype._createFinalSlots = function (n) {
         var self = this;
         var i, slots = [];
 
         for(i=0;i<n;i++){
-            slots.push(new bs.FinalSlot());
+            var slot = new bs.klondike.FinalSlot();
+            slot.$el.on('add:card', self._checkWin.bind(self));
+            slots.push(slot);
         }
         return slots;
     };
 
+    GameType.prototype._checkWin = function () {
+        var self = this;
 
-    bs.Klondike = Klondike;
+        var check = self.game.board.slots.final.every(function (slot) {
+            return slot.cards.length === 13
+        });
+        console.log('win' + check)
+        if(check) self.game.win();
+    };
+
+
+    bs.klondike.GameType = GameType;
 }(bs, jQuery));

@@ -16,5 +16,5 @@
         }
         return array;
     }
-    bs.Helpers = new Helpers();
+    bs.helpers = new Helpers();
 }(bs, jQuery))

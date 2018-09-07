@@ -32,7 +32,7 @@
 
     DeckSlot.prototype.shuffle = function () {
         var self = this;
-        self.cards = bs.Helpers.shuffleArray(self.cards);
+        self.cards = bs.helpers.shuffleArray(self.cards);
         return self;
     };
 

@@ -24,20 +24,20 @@
     Game.prototype.startKlondike = function () {
         var self = this;
         self.board.clearBoard();
-        self.gameType = new bs.Klondike(self);
+        self.gameType = new bs.klondike.GameType(self);
         self.gameType.startGame();
     };
 
     Game.prototype.startSpider = function () {
         var self = this;
         self.board.clearBoard();
-        self.gameType = new bs.Spider(self);
+        self.gameType = new bs.spider.GameType(self);
         self.gameType.startGame();
     };
 
     Game.prototype.win = function () {
         var self = this;
-        self.board
+        alert('you win ')
     };
 
     bs.Game = Game;

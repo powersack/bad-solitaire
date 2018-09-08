@@ -27,6 +27,7 @@
                 self.rejectCard(card);
             }
         }
+        self.$el.trigger('drop',[self, card, lastCard]);
     };
 
     FinalSlot.prototype.checkCardFit = function (card1, card2) {

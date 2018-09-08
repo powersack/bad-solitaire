@@ -12,6 +12,9 @@
 
     DeckSlot.prototype._init = function () {
         var self = this;
+        self.$el.on('addcard', function () {
+            self.$el.removeClass('slot-empty');
+        });
     };
 
     DeckSlot.prototype.createCards = function (cards) {
@@ -26,7 +29,7 @@
                 self.cards.push(new bs.Card(c, n));
             }
         }
-        self.$el.removeClass('deck-empty');
+        self.$el.removeClass('slot-empty');
         return self;
     };
 
@@ -43,7 +46,7 @@
         for(i=0;i<n;i++){
             drawnCards.push(self.cards.pop());
         }
-        if(!self.cards.length) self.$el.addClass('deck-empty');
+        if(!self.cards.length) self.$el.addClass('slot-empty');
         self.$el.trigger('draw');
         return drawnCards;
     };

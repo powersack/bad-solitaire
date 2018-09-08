@@ -7,6 +7,7 @@
 }
 
 .card{
+  position: relative;
   .unitize-height(@card-height);
   .unitize-width(@card-width);
   border: 1px solid grey;
@@ -22,20 +23,48 @@
   .card-number{
     .unitize(font-size, 20);
     z-index: -1;
+    position: absolute;
+
+    &.top{
+      .unitize(left, 5);
+      &.card-number{
+        .unitize(top, 3);
+      }
+      &.card-color{
+        .unitize(top, 18);
+      }
+    }
+    &.bottom{
+      .unitize(right, 5);
+      .transform(rotateZ(180deg));
+      &.card-number{
+        .unitize(bottom, 3);
+      }
+      &.card-color{
+        .unitize(bottom, 18);
+      }
+    }
+
   }
 
   &{
     .card-index(@card-z - 1); // launch the loop
   }
 
+  &.revealed{
+    background: #ffffff;
+  }
+
   &.c0,
   &.c2{
-    background: linear-gradient(@card-black, lighten(@card-black, 30%));
+    color: @card-black;
+    //background: linear-gradient(@card-black, lighten(@card-black, 30%));
   }
 
   &.c1,
   &.c3{
-    background: linear-gradient(@card-red, lighten(@card-red, 30%));
+    color: @card-red;
+    //background: linear-gradient(@card-red, lighten(@card-red, 30%));
   }
 
   //unicode symbols

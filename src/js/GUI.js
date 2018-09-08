@@ -18,7 +18,8 @@
     GUI.prototype._buildTopBar = function () {
         var self = this;
         var $toggleMenu =  $('<button>', {'class': 'button', 'html': 'Menü'}).click(self.showMenu.bind(self));
-        self.$topBar.append($toggleMenu);
+        var $save =  $('<button>', {'class': 'button', 'html': 'Speichern'}).click(self.game.save.bind(self.game));
+        self.$topBar.append($toggleMenu, $save);
     };
 
     GUI.prototype._buildMenu = function () {
@@ -27,13 +28,13 @@
 
         var $startKlondike = $('<button>', {'class': 'button', 'html': 'Klondike'})
             .click(function () {
-                self.game.startKlondike();
+                self.game.startGame('klondike');
                 self.hideMenu();
             });
 
         var $startSpider = $('<button>', {'class': 'button', 'html': 'Spider'})
             .click(function () {
-                self.game.startSpider();
+                self.game.startGame('spider');
                 self.hideMenu();
             });
 

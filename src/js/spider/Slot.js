@@ -50,6 +50,7 @@
             cards.push(self.cards[i]);
         }
 
+        self.$el.trigger('update', [self]);
         return self;
     };
 

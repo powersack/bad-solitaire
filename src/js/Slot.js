@@ -16,7 +16,7 @@
             drop: self.onDrop.bind(self),
             tolerance: 'touch'
         });
-        self.$el.trigger('init');
+        self.$el.trigger('init', [self]);
     };
 
     Slot.prototype.onDrop = function (event, ui) {
@@ -37,7 +37,7 @@
             }
         }
 
-        self.$el.trigger('drop');
+        self.$el.trigger('drop',[self, card, lastCard]);
     };
 
     Slot.prototype.checkCardFit = function (card1, card2) {
@@ -48,18 +48,19 @@
     Slot.prototype.rejectCard = function (card) {
         var self = this;
         card.return();
-        self.$el.trigger('reject');
+        self.$el.trigger('reject', [self, card]);
     };
 
     Slot.prototype.acceptCard = function (card) {
         var self = this;
+        self.$el.trigger('accept:before', [self, card]);
         if(card.attachedCards.length){
             var cards = card.attachedCards.concat(card);
             self.addCards(cards);
         } else {
             self.addCard(card);
         }
-        self.$el.trigger('accept');
+        self.$el.trigger('accept', [self, card]);
     };
 
     Slot.prototype.addCard = function (card) {
@@ -74,7 +75,7 @@
         self.$el.append(card.$el);
         self.updateDraggable();
 
-        self.$el.trigger('addcard', [card]);
+        self.$el.trigger('addcard', [self, card]);
         return self;
     };
 
@@ -89,7 +90,7 @@
             }
         }
         self.updateDraggable();
-        self.$el.trigger('removecard', [card]);
+        self.$el.trigger('removecard', [self, card]);
         return removedCard;
     };
 
@@ -114,6 +115,13 @@
         return self;
     };
 
+    Slot.prototype.hideLastCard = function () {
+        var self = this;
+        var card = self.getCard(self.cards.length - 1);
+        if(card) card.hide();
+        return self;
+    };
+
     Slot.prototype.updateDraggable = function () {
         var self = this;
         var i, tmpCard, cards = [];
@@ -134,7 +142,7 @@
             cards.push(self.cards[i]);
         }
 
-        self.$el.trigger('update');
+        self.$el.trigger('update', [self]);
         return self;
     };
 

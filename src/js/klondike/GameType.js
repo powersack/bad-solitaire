@@ -10,10 +10,12 @@
     };
 
 
-    var GameType = function (game, opts) {
+    var GameType = function (game, loadedSlots, opts) {
         var self = this;
         self.game = game;
         self.opts = DEFAULTS;
+        self.type = 'klondike';
+        self.loadedSlots = loadedSlots || null;
 
         self.setOpts(opts);
         self._init();
@@ -39,35 +41,53 @@
     GameType.prototype.startGame = function () {
         var self = this;
         var board = self.game.board;
-        board.addDeck(self._createDeck());
-        // board.addDrawSlot();
-        board.addSlots([new bs.DrawSlot()], 'draw', 'top');
+
+        board.addSlots([self._createDeck()], 'deck', 'top');
+        board.addSlots([self._createDrawSlot()], 'draw', 'top');
         board.addSlots(self._createFinalSlots(self.opts.cards.colors), 'final', 'top');
         board.addSlots(self._createSlots(self.opts.slots), 'play', 'center');
-        board.deck.shuffle();
 
-        board.slots.play.forEach(function (slot, index) {
-            var drawnCards = board.deck.drawCards(index + 1);
-            slot.addCards(drawnCards);
-            slot.revealLastCard();
-        });
+        if(!self.loadedSlots){
+            board.slots.deck[0].shuffle();
+            board.slots.play.forEach(function (slot, index) {
+                var drawnCards = board.slots.deck[0].drawCards(index + 1);
+                // drawnCards = drawnCards.reverse();
+                slot.addCards(drawnCards);
+                slot.revealLastCard();
+            });
+        }
     };
 
     GameType.prototype._createDeck = function () {
         var self = this;
-        var deck = new bs.DeckSlot();
+        var slot = new bs.DeckSlot();
 
-        deck.createCards(self.opts.cards);
-        deck.$el.click(function () {
-            var drawnCards = deck.drawCards(self.opts.drawCards);
+        if(self.loadedSlots && self.loadedSlots['deck'] && self.loadedSlots['deck'][0]){
+            slot.addCards(self.loadedSlots['deck'][0]);
+        } else {
+            slot.createCards(self.opts.cards);
+        }
+        slot.$el.click(function () {
+            var drawnCards = slot.drawCards(self.opts.drawCards).reverse();
             if(!drawnCards.length){
-                deck.addCards(self.game.board.slots.draw[0].cards);
+                slot.addCards(self.game.board.slots.draw[0].cards);
             } else {
                 self.game.board.slots.draw[0].addCards(drawnCards);
             }
         });
 
-        return deck;
+        return slot;
+    };
+
+    GameType.prototype._createDrawSlot = function () {
+        var self = this;
+        var slot = new bs.DrawSlot();
+
+        if(self.loadedSlots && self.loadedSlots['draw'] && self.loadedSlots['draw'][0]){
+            slot.addCards(self.loadedSlots['draw'][0]);
+        }
+
+        return slot;
     };
 
     GameType.prototype._createSlots = function (n) {
@@ -75,7 +95,16 @@
         var i, slots = [];
 
         for(i=0;i<n;i++){
-            slots.push(new bs.klondike.Slot());
+            var slot = new bs.klondike.Slot();
+            if(self.loadedSlots && self.loadedSlots['play'] && self.loadedSlots['play'][i]){
+                slot.addCards(self.loadedSlots['play'][i]);
+            }
+            slots.push(slot);
+            (function (slot) {
+                slot.$el.on('reject', function () {
+                    self.game.gfx.text('Rejected', slot.$el.position());
+                });
+            }(slot));
         }
         return slots;
     };
@@ -87,6 +116,9 @@
 
         for(i=0;i<n;i++){
             var slot = new bs.klondike.FinalSlot();
+            if(self.loadedSlots && self.loadedSlots['final'] && self.loadedSlots['final'][i]){
+                slot.addCards(self.loadedSlots['final'][i]);
+            }
             slot.$el.on('addcard', self._checkWin.bind(self));
             slots.push(slot);
         }
@@ -99,7 +131,6 @@
         var check = self.game.board.slots.final.every(function (slot) {
             return slot.cards.length === 13
         });
-        console.log('win' + check)
         if(check) self.game.win();
     };
 

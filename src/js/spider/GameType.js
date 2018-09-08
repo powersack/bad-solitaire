@@ -9,11 +9,14 @@
         slots: 10
     };
 
-    var GameType = function (game, opts) {
+    var GameType = function (game, loadedSlots, opts) {
         var self = this;
         self.game = game;
         self.board = game.board;
         self.opts = DEFAULTS;
+        self.type = 'spider';
+        self.loadedSlots = loadedSlots || null;
+
         self.setOpts(opts);
         self.deckNo = 104 / (self.opts.cards.colors * self.opts.cards.numbers);
         self._init();
@@ -38,29 +41,36 @@
     GameType.prototype.startGame = function () {
         var self = this;
         var board = self.board;
-        board.addDeck(self._createDeck());
-        board.addSlots(self._createSlots(self.opts.slots), 'play', 'center');
-        board.deck.shuffle();
 
-        board.slots.play.forEach(function (slot, index) {
-            var n = index < 4 ? 6 : 5;
-            var drawnCards = board.deck.drawCards(n);
-            slot.addCards(drawnCards);
-            slot.revealLastCard();
-        });
+        board.addSlots([self._createDeck()], 'deck', 'top');
+        board.addSlots(self._createSlots(self.opts.slots), 'play', 'center');
+
+        if(!self.loadedSlots) {
+            board.slots.deck[0].shuffle();
+            board.slots.play.forEach(function (slot, index) {
+                var n = index < 4 ? 6 : 5;
+                var drawnCards = board.slots.deck[0].drawCards(n);
+                slot.addCards(drawnCards);
+                slot.revealLastCard();
+            });
+        }
     };
 
     GameType.prototype._createDeck = function () {
         var self = this;
-        var deck = new bs.DeckSlot();
+        var slot = new bs.DeckSlot();
         var i;
 
-        for(i=0;i<self.deckNo;i++){
-            deck.createCards(self.opts.cards);
+        if(self.loadedSlots && self.loadedSlots['deck'] && self.loadedSlots['deck'][0]){
+            slot.addCards(self.loadedSlots['deck'][0]);
+        } else {
+            for(i=0;i<self.deckNo;i++){
+                slot.createCards(self.opts.cards);
+            }
         }
 
-        deck.$el.click(function () {
-            var drawnCards = deck.drawCards(self.opts.slots);
+        slot.$el.click(function () {
+            var drawnCards = slot.drawCards(self.opts.slots);
             var i;
             if(drawnCards.length){
                 for(i=drawnCards.length-1;i>-1;i--){
@@ -70,7 +80,7 @@
             }
         });
 
-        return deck;
+        return slot;
     };
 
     GameType.prototype._createSlots = function (n) {
@@ -79,7 +89,10 @@
 
         for(i=0;i<n;i++){
             var slot = new bs.spider.Slot();
-            slot.$el.on('whole_family', self._onWholeFamily.bind(self))
+            if(self.loadedSlots && self.loadedSlots['play'] && self.loadedSlots['play'][i]){
+                slot.addCards(self.loadedSlots['play'][i]);
+            }
+            slot.$el.on('whole_family', self._onWholeFamily.bind(self));
             slots.push(slot);
         }
         return slots;

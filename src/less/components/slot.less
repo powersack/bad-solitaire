@@ -21,13 +21,16 @@
     .card{
       display: none;
     }
+    &.slot-empty{
+      background: transparent;
+    }
   }
 
   &.play-slot{
     height: auto;
     .unitize-min-height(@card-height);
     .card{
-      .unitize(margin-top, (@card-height * -0.3333333));
+      .unitize(margin-top, (@card-height * -0.66666666));
       &:first-child{
         margin-top: 0;
       }

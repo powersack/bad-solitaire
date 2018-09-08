@@ -1,13 +1,14 @@
 ;(function (bs, $) {
-    var Card = function (color, number) {
+    var Card = function (color, number, status) {
         var self = this;
         self.id = bs._id.card;
         self.$el = $('<div>', {'class': 'card'});
         self._color = color;
         self._number = number;
-        self.status = 0;
+        self.status = status || 0;
         self.slot = null;
         self.attachedCards = [];
+        self._$values = [];
 
         bs._id.card++;
         self._init();
@@ -27,6 +28,7 @@
 
     Card.prototype._init = function () {
         var self = this;
+        self._$values = self._createValues(self.number, self.color);
         self.$el
             .data('card', self)
             .draggable({
@@ -34,9 +36,23 @@
                 start: self.onDragStart.bind(self),
                 stop: self.onDragStop.bind(self)})
             .draggable('disable');
-        self.$number = $('<div>', {'class': 'card-number', 'html': bs.strings.cards.numberNames[self.number]});
-        self.$color = $('<div>', {'class': 'card-color', 'html': bs.strings.cards.colorNames[self.color]});
-        self.$el.trigger('init');
+        self.$el.trigger('init', [self]);
+
+        if(self.status === 1){
+            self.reveal();
+        }
+    };
+
+
+    Card.prototype._createValues = function (color, number) {
+        var self = this;
+        var values = [];
+
+        values.push($('<div>', {'class': 'card-number top', 'html': bs.strings.cards.numberNames[self.number]}));
+        values.push($('<div>', {'class': 'card-color top', 'html': bs.strings.cards.colorNames[self.color]}));
+        values.push($('<div>', {'class': 'card-number bottom', 'html': bs.strings.cards.numberNames[self.number]}));
+        values.push($('<div>', {'class': 'card-color bottom', 'html': bs.strings.cards.colorNames[self.color]}));
+        return values;
     };
 
     Card.prototype.onDrag = function (e,ui) {
@@ -48,7 +64,7 @@
                 left: ui.position.left
             });
         });
-        self.$el.trigger('drag');
+        self.$el.trigger('drag', [self]);
     };
 
     Card.prototype.onDragStart = function (e,ui) {
@@ -56,7 +72,7 @@
         self.attachedCards.forEach(function (card) {
             card.$el.addClass('ui-draggable-dragging');
         });
-        self.$el.trigger('dragstart');
+        self.$el.trigger('dragstart', [self]);
     };
 
     Card.prototype.onDragStop = function (e,ui) {
@@ -104,11 +120,11 @@
     Card.prototype.reveal = function () {
         var self = this;
         self.status = 1;
-        self.$el.addClass('revealed');
+        self.$el.addClass('revealed flipInY');
         self.$el.addClass('c'+self.color);
         self.$el.addClass('n'+self.number);
         self._appendValues();
-        self.$el.trigger('reveal');
+        self.$el.trigger('reveal', [self]);
         return self;
     };
 
@@ -119,20 +135,20 @@
         self.$el.removeClass('c'+self.color);
         self.$el.removeClass('n'+self.number);
         self._removeValues();
-        self.$el.trigger('hide');
+        self.$el.trigger('hide', [self]);
         return self;
     };
 
     Card.prototype._appendValues = function () {
         var self = this;
-        self.$el.append(self.$number);
-        self.$el.append(self.$color);
+        self.$el.append(self._$values);
     };
 
     Card.prototype._removeValues = function () {
         var self = this;
-        self.$number.remove();
-        self.$color.remove();
+        self._$values.forEach(function ($value) {
+            $value.remove();
+         });
     };
 
     Card.prototype.enableDrag = function () {

@@ -17,7 +17,7 @@
 
     GUI.prototype._buildTopBar = function () {
         var self = this;
-        var $toggleMenu =  $('<button>', {'class': 'button', 'html': 'Menü'}).click(self.showMenu.bind(self));
+        var $toggleMenu =  $('<button>', {'class': 'button', 'html': 'Neu'}).click(self.showMenu.bind(self));
         var $save =  $('<button>', {'class': 'button', 'html': 'Speichern'}).click(self.game.save.bind(self.game));
 
         var themes = 'excel mac';

@@ -26,7 +26,9 @@
 
         for(c = 0; c < cards.colors; c++){
             for(n = 0; n < cards.numbers; n++) {
-                self.cards.push(new bs.Card(c, n));
+                var card = new bs.Card(c, n);
+                card.setSlot(self);
+                self.cards.push(card);
             }
         }
         self.$el.removeClass('slot-empty');

@@ -45,6 +45,13 @@
         board.addSlots([self._createDeck()], 'deck', 'top');
         board.addSlots(self._createSlots(self.opts.slots), 'play', 'center');
 
+        //TODO: load final slots
+        if(self.loadedSlots && self.loadedSlots['final']){
+            self.loadedSlots['final'].forEach(function (slot) {
+                self.createFinalSlot(null, slot);
+            });
+        }
+
         if(!self.loadedSlots) {
             board.slots.deck[0].shuffle();
             board.slots.play.forEach(function (slot, index) {
@@ -73,6 +80,9 @@
             var drawnCards = slot.drawCards(self.opts.slots);
             var i;
             if(drawnCards.length){
+                for(i=0 ;i<drawnCards.length;i++){
+                    self.game.history.addRecord(null, self.board.slots.play[i], drawnCards[i]);
+                }
                 for(i=drawnCards.length-1;i>-1;i--){
                     self.board.slots.play[i].addCard(drawnCards[i]);
                     self.board.slots.play[i].revealLastCard();
@@ -92,14 +102,14 @@
             if(self.loadedSlots && self.loadedSlots['play'] && self.loadedSlots['play'][i]){
                 slot.addCards(self.loadedSlots['play'][i]);
             }
-            slot.$el.on('whole_family', self._onWholeFamily.bind(self));
+            slot.$el.on('whole_family', self.createFinalSlot.bind(self));
             slots.push(slot);
         }
         return slots;
     };
 
 
-    GameType.prototype._onWholeFamily = function (e, cards) {
+    GameType.prototype.createFinalSlot = function (e, cards) {
         var self = this;
         var slot = new bs.spider.FinalSlot();
         var i;
@@ -118,7 +128,6 @@
         var self = this;
         var check = self.board.slots.final.length === 104 / self.opts.cards.numbers;
 
-        console.log('win' + check)
         if(check) self.game.win();
     };
 

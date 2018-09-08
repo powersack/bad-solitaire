@@ -27,7 +27,6 @@
         currentRecord.fromSlot.hideLastCard();
         currentRecord.fromSlot.addCards(currentRecord.card.attachedCards.concat(currentRecord.card));
         self.pointer--;
-        console.log(self)
     };
 
     History.prototype.redo = function () {
@@ -36,7 +35,6 @@
         self.pointer++;
         var currentRecord = self.records[self.pointer];
         currentRecord.toSlot.addCards(currentRecord.card.attachedCards.concat(currentRecord.card));
-        console.log(self)
     };
 
     bs.History = History;

@@ -1,0 +1,67 @@
+@excel-card-backside: white;
+@excel-table-color: white;
+
+@excel-card-width: 80;
+@excel-card-height: 20;
+.game.excel{
+  background: @excel-table-color;
+  .board{
+    padding: 0;
+  }
+  .slot{
+    padding: 0;
+    margin: 0;
+    .unitize-min-height(@excel-card-height);
+
+    &.play-slot{
+      border-color: white;
+      .card{
+        margin: 0;
+        .unitize-height(@excel-card-height);
+      }
+    }
+
+    &.final-slot {
+      width: 78px;
+      margin-right: 2px;
+      .card{
+        border: none;
+      }
+    }
+    &.draw-slot {
+      border-color: white;
+      .unitize-width(246);
+      .card{
+        margin: 0 1px 0 1px !important;
+      }
+    }
+    &.deck {
+      background: white;
+    }
+  }
+  .card{
+    background: @excel-card-backside;
+    border-radius: 0;
+    .unitize-height(@excel-card-height);
+
+    .card-color,
+    .card-number{
+      .unitize(font-size, 16);
+      position: relative;
+      display: inline;
+
+      &.top{
+        left: auto;
+        &.card-number{
+          top: auto;
+        }
+        &.card-color{
+          top: auto;
+        }
+      }
+      &.bottom{
+        display: none;
+      }
+    }
+  }
+}

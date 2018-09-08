@@ -7,11 +7,7 @@
         self.gfx = new bs.gfx.Gfx();
 
         self.gameType = null;
-
-        self.history = {
-            pointer: -1,
-            records: []
-        };
+        self.history = null;
 
         self._init();
     };
@@ -24,11 +20,13 @@
         self.$el.append(self.board.$el);
         self.load();
         $(document).on('keydown', function (e) {
-            if(e.keyCode === 90 && e.ctrlKey){
-                self.undo();
-            }
-            if(e.keyCode === 89 && e.ctrlKey){
-                self.redo();
+            if(self.history){
+                if(e.keyCode === 90 && e.ctrlKey){
+                    self.history.undo();
+                }
+                if(e.keyCode === 89 && e.ctrlKey){
+                    self.history.redo();
+                }
             }
         });
         $(window).on('beforeunload', function(){
@@ -49,43 +47,14 @@
 
     Game.prototype.initHistory = function () {
         var self = this;
+        self.history = new bs.History(self);
         for(var type in self.board.slots){
             self.board.slots[type].forEach(function (slot) {
-                slot.$el.on('accept:before', self.historyAddRecord.bind(self));
+                slot.$el.on('accept:before', function(e, targetSlot, card){
+                    self.history.addRecord(e, targetSlot, card)
+                });
             });
         }
-    };
-
-    Game.prototype.historyAddRecord = function (e, targetSlot, card) {
-        var self = this;
-        if(self.history.pointer < self.history.records.length -1){
-            self.history.records.length = self.history.pointer +1;
-        }
-        self.history.records.push({
-            card: card,
-            fromSlot: card.slot || null,
-            toSlot: targetSlot
-        });
-        self.history.pointer++;
-    };
-
-    Game.prototype.undo = function () {
-        var self = this;
-        if(self.history.pointer < 0) return;
-        var currentRecord = self.history.records[self.history.pointer];
-        currentRecord.fromSlot.hideLastCard();
-        currentRecord.fromSlot.addCards(currentRecord.card.attachedCards.concat(currentRecord.card));
-        self.history.pointer--;
-        console.log(self.history)
-    };
-
-    Game.prototype.redo = function () {
-        var self = this;
-        if(self.history.pointer === self.history.records.length -1) return;
-        self.history.pointer++;
-        var currentRecord = self.history.records[self.history.pointer];
-        currentRecord.toSlot.addCards(currentRecord.card.attachedCards.concat(currentRecord.card));
-        console.log(self.history)
     };
 
     Game.prototype.save = function () {

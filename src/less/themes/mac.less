@@ -1,0 +1,18 @@
+@mac-card-backside: white;
+@mac-table-color: white;
+
+.game.mac{
+  background: @mac-table-color;
+  .card{
+    background: linear-gradient(@mac-card-backside, darken(@mac-card-backside, 40%));
+    border-radius: 0;
+  }
+  .slot{
+    &.ui-droppable-hover{
+      border-color: darken(@mac-table-color, 5%);
+    }
+    &.deck {
+      background: linear-gradient(@mac-card-backside, darken(@mac-card-backside, 40%));
+    }
+  }
+}

@@ -29,6 +29,7 @@ module.exports = function(grunt) {
                     'src/js/spider/Slot.js',
                     'src/js/spider/FinalSlot.js',
                     'src/js/spider/GameType.js',
+                    'src/js/History.js',
                     'src/js/Game.js',
                     'src/js/main.js'
                 ],

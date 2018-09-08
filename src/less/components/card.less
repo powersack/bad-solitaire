@@ -9,7 +9,8 @@
 .card{
   position: relative;
   .unitize-height(@card-height);
-  .unitize-width(@card-width);
+  .unitize-max-width(@card-width);
+  width: 100%;
   border: 1px solid grey;
   .unitize(border-radius,5);
   color: @card-symbol-color;

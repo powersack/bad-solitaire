@@ -19,7 +19,25 @@
         var self = this;
         var $toggleMenu =  $('<button>', {'class': 'button', 'html': 'Menü'}).click(self.showMenu.bind(self));
         var $save =  $('<button>', {'class': 'button', 'html': 'Speichern'}).click(self.game.save.bind(self.game));
-        self.$topBar.append($toggleMenu, $save);
+
+        var themes = 'excel mac';
+
+        var $theme = $('<select>').change(function () {
+            var $select = $(this);
+            var $game = self.game.$el;
+            var val = $select.val();
+            $game.removeClass(themes);
+            if(val !== 'reset'){
+                $game.addClass(val);
+            }
+        });
+        $theme.append($('<option>', {value: 'reset', html: 'Windows'}));
+        themes.split(' ').forEach(function (theme) {
+            var $opt = $('<option>', {value: theme, html: theme[0].toUpperCase() + theme.substring(1)});
+            $theme.append($opt);
+        });
+
+        self.$topBar.append($toggleMenu, $save, $theme);
     };
 
     GUI.prototype._buildMenu = function () {
@@ -49,7 +67,7 @@
 
     GUI.prototype.showMenu = function () {
         var self = this;
-        self.$menu.show();
+        self.$menu.css({display: 'flex'});
     };
 
     GUI.prototype.hideMenu = function () {

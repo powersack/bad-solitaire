@@ -31,7 +31,7 @@
         });
         $(window).on('beforeunload', function(){
             setTimeout( self.save.bind(self), 0 );
-            return "speichern?";
+            // return "speichern?";
         });
     };
 

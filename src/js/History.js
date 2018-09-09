@@ -12,11 +12,14 @@
         if(self.pointer < self.records.length -1){
             self.records.length = self.pointer +1;
         }
+        var fromSlotLastCardStatus = card.slot.cards.length > 2 ? card.slot.cards[card.slot.cards.length -2].status : 2;
         self.records.push({
             card: card,
-            fromSlot: card.slot || null,
-            toSlot: targetSlot
+            fromSlot: card.slot,
+            toSlot: targetSlot,
+            fromSlotLastCardStatus: fromSlotLastCardStatus
         });
+
         self.pointer++;
     };
 
@@ -24,7 +27,9 @@
         var self = this;
         if(self.pointer < 0) return;
         var currentRecord = self.records[self.pointer];
-        currentRecord.fromSlot.hideLastCard();
+        if(currentRecord.fromSlotLastCardStatus === 0){
+            currentRecord.fromSlot.hideLastCard();
+        }
         currentRecord.fromSlot.addCards(currentRecord.card.attachedCards.concat(currentRecord.card));
         self.pointer--;
     };

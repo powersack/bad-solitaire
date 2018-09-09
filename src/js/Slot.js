@@ -23,8 +23,13 @@
         var self = this;
         var $ui = $(ui.draggable);
         var card = $ui.data('card');
+        self.determineAcception(card);
+        self.$el.trigger('drop',[self, card]);
+    };
+
+    Slot.prototype.determineAcception = function (card) {
+        var self = this;
         var lastCard = self.getCard(self.cards.length - 1);
-        //TODO: RULE
         if(!lastCard){
             self.acceptCard(card);
         } else if(card.slot && card.slot.id === self.id){
@@ -36,8 +41,6 @@
                 self.rejectCard(card);
             }
         }
-
-        self.$el.trigger('drop',[self, card, lastCard]);
     };
 
     Slot.prototype.checkCardFit = function (card1, card2) {
@@ -73,7 +76,7 @@
         card.setSlot(self);
         self.cards.push(card);
         self.$el.append(card.$el);
-        self.updateDraggable();
+        self.updateCards();
 
         self.$el.trigger('addcard', [self, card]);
         return self;
@@ -89,7 +92,7 @@
                 break;
             }
         }
-        self.updateDraggable();
+        self.updateCards();
         self.$el.trigger('removecard', [self, card]);
         return removedCard;
     };
@@ -122,7 +125,7 @@
         return self;
     };
 
-    Slot.prototype.updateDraggable = function () {
+    Slot.prototype.updateCards = function () {
         var self = this;
         var i, tmpCard, cards = [];
 

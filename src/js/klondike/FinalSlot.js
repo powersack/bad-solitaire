@@ -11,10 +11,8 @@
     FinalSlot.prototype = Object.create(bs.Slot.prototype);
     FinalSlot.prototype.constructor = FinalSlot;
 
-    FinalSlot.prototype.onDrop = function (event, ui) {
+    FinalSlot.prototype.determineAcception = function (card) {
         var self = this;
-        var $ui = $(ui.draggable);
-        var card = $ui.data('card');
         var lastCard = self.getCard(self.cards.length - 1);
         if(!lastCard && card.number === 0){
             self.acceptCard(card);
@@ -27,7 +25,6 @@
                 self.rejectCard(card);
             }
         }
-        self.$el.trigger('drop',[self, card, lastCard]);
     };
 
     FinalSlot.prototype.checkCardFit = function (card1, card2) {

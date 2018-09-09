@@ -10,15 +10,12 @@
     DrawSlot.prototype = Object.create(bs.Slot.prototype);
     DrawSlot.prototype.constructor = DrawSlot;
 
-    DrawSlot.prototype.onDrop = function (event, ui) {
+    DrawSlot.prototype._init = function () {
         var self = this;
-        var $ui = $(ui.draggable);
-        var card = $ui.data('card');
-        self.rejectCard(card);
-        self.$el.trigger('drop');
+        self.$el.trigger('init', [self]);
     };
 
-    DrawSlot.prototype.updateDraggable = function () {
+    DrawSlot.prototype.updateCards = function () {
         var self = this;
         var i;
 

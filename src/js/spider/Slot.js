@@ -25,7 +25,7 @@
         return (card1.color === card2.color) && (card1.number === card2.number - 1) ;
     };
 
-    Slot.prototype.updateDraggable = function () {
+    Slot.prototype.updateCards = function () {
         var self = this;
         var i, tmpCard, cards = [];
 

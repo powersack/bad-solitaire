@@ -12,7 +12,7 @@
 
     FinalSlot.prototype._init = function () {};
     FinalSlot.prototype.onDrop = function (event, ui) {};
-    FinalSlot.prototype.updateDraggable = function () {};
+    FinalSlot.prototype.updateCards = function () {};
 
     bs.spider.FinalSlot = FinalSlot;
 }(bs, jQuery));

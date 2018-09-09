@@ -53,10 +53,7 @@
         return drawnCards;
     };
 
-    DeckSlot.prototype.updateDraggable = function (n) {
-    };
-
-
+    DeckSlot.prototype.updateCards = function (n) {};
 
     bs.DeckSlot = DeckSlot;
 }(bs, jQuery));

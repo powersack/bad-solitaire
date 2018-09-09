@@ -19,9 +19,12 @@
   user-select: none;
   cursor: grab;
   .unitize-padding(3,5);
+  overflow: hidden;
 
   .card-color,
-  .card-number{
+  .card-number,
+  .card-icon{
+    font-family: 'card_symbols';
     .unitize(font-size, 24);
     z-index: -1;
     position: absolute;
@@ -46,7 +49,15 @@
       }
     }
 
+    &.card-icon{
+      top: 0;
+      .unitize(left, 15);
+      .unitize(font-size, 130);
+      .unitize(line-height, 100);
+      font-weight: 100;
+    }
   }
+
 
   &{
     .card-index(@card-z - 1); // launch the loop
@@ -54,6 +65,16 @@
 
   &.revealed{
     background: #ffffff;
+  }
+
+  &.n0 {
+    .card-icon{
+      display: none;
+      .unitize(left, 8);
+    }
+    &.c0 .card-icon{
+      display: block;
+    }
   }
 
   &.c0,

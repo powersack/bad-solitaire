@@ -109,6 +109,7 @@ module.exports = function(grunt) {
                     'uglify',
                     'less',
                     'copy:images',
+                    'copy:fonts',
                     'copy:html'
                 ]
             }
@@ -121,6 +122,7 @@ module.exports = function(grunt) {
             'uglify',
             'less',
             'copy:images',
+            'copy:fonts',
             'copy:html',
             'watch'
         ]

@@ -29,18 +29,39 @@
     Card.prototype._init = function () {
         var self = this;
         self._$values = self._createValues(self.number, self.color);
-        self.$el
-            .data('card', self)
+        self.$el.data('card', self)
             .draggable({
                 drag: self.onDrag.bind(self),
                 start: self.onDragStart.bind(self),
                 stop: self.onDragStop.bind(self)})
             .draggable('disable');
-        self.$el.trigger('init', [self]);
 
         if(self.status === 1){
             self.reveal();
         }
+        self.$el.trigger('init', [self]);
+    };
+
+    Card.prototype.select = function () {
+        var self = this;
+        self.$el.addClass('selected');
+
+        self.attachedCards.forEach(function (card) {
+            card.$el.addClass('selected');
+        });
+        self.$el.trigger('select', [self]);
+        return self;
+    };
+
+    Card.prototype.deselect = function () {
+        var self = this;
+        self.$el.removeClass('selected');
+
+        self.attachedCards.forEach(function (card) {
+            card.$el.removeClass('selected');
+        });
+        self.$el.trigger('deselect', [self]);
+        return self;
     };
 
 
@@ -50,6 +71,10 @@
 
         values.push($('<div>', {'class': 'card-number top', 'html': bs.strings.cards.numberNames[self.number]}));
         values.push($('<div>', {'class': 'card-color top', 'html': bs.strings.cards.colorNames[self.color]}));
+        if(bs.strings.cards.icons[self.number] !== ''){
+            values.push($('<div>', {'class': 'card-icon top', 'html': bs.strings.cards.icons[self.number]}));
+        }
+
         values.push($('<div>', {'class': 'card-number bottom', 'html': bs.strings.cards.numberNames[self.number]}));
         values.push($('<div>', {'class': 'card-color bottom', 'html': bs.strings.cards.colorNames[self.color]}));
         return values;
@@ -120,7 +145,7 @@
     Card.prototype.reveal = function () {
         var self = this;
         self.status = 1;
-        self.$el.addClass('revealed flipInY');
+        self.$el.addClass('revealed');
         self.$el.addClass('c'+self.color);
         self.$el.addClass('n'+self.number);
         self._appendValues();
@@ -153,11 +178,13 @@
 
     Card.prototype.enableDrag = function () {
         var self = this;
+        if(!self.$el.draggable) return;
         self.$el.draggable('enable');
     };
 
     Card.prototype.disableDrag = function () {
         var self = this;
+        if(!self.$el.draggable) return;
         self.$el.draggable('disable');
     };
 

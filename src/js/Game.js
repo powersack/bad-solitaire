@@ -7,7 +7,7 @@
         self.gfx = new bs.gfx.Gfx();
 
         self.gameType = null;
-        self.history = null;
+        self.history = new bs.History(self);
 
         self._init();
     };
@@ -19,6 +19,7 @@
         self.$el.append(self.gfx.$el);
         self.$el.append(self.board.$el);
         self.load();
+        // self.initTouchControls();
         $(document).on('keydown', function (e) {
             if(self.history){
                 if(e.keyCode === 90 && e.ctrlKey){
@@ -55,8 +56,45 @@
                 });
             });
         }
-    };
 
+        self.$el.append(self.GUI.getBottomBar());
+    };
+    Game.prototype.initTouchControls = function () {
+        var self = this;
+        for(var type in self.board.slots) {
+            self.board.slots[type].forEach(function (slot, index) {
+                slot.$el.click(function () {
+                    if(self._selectedCard){
+                        if(slot.determineAcception(self._selectedCard)){
+                            self._selectedCard.deselect();
+                            self._selectedCard = null;
+                        }
+                        console.log('1')
+                    }
+                });
+
+                slot.cards.forEach(function (card) {
+                    card.$el.click(function(){
+                        if(self._selectedCard){
+                            self._selectedCard.deselect();
+                            if(!card.slot.determineAcception(self._selectedCard)){
+                                self._selectedCard = card;
+                                card.select();
+                            } else {
+                                card.deselect();
+                                self._selectedCard = null;
+                            }
+                        } else {
+
+                            self._selectedCard = card;
+                            card.select();
+                        }
+                        console.log('2')
+                    })
+                })
+            })}
+
+    };
     Game.prototype.save = function () {
         var self = this;
         var jsonObj = {gameType: self.gameType.type, slots: {}};

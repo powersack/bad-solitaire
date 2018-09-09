@@ -4,6 +4,7 @@
         self.$el = $('<div>', {'class': 'gui'});
         self.$menu = $('<div>', {'class': 'menu'});
         self.$topBar = $('<div>', {'class': 'top-bar'});
+        self.$bottomBar = $('<div>', {'class': 'bottom-bar'});
         self.game = game;
 
         self._init();
@@ -21,7 +22,6 @@
         var $save =  $('<button>', {'class': 'button', 'html': 'Speichern'}).click(self.game.save.bind(self.game));
 
         var themes = 'excel mac';
-
         var $theme = $('<select>').change(function () {
             var $select = $(this);
             var $game = self.game.$el;
@@ -38,6 +38,13 @@
         });
 
         self.$topBar.append($toggleMenu, $save, $theme);
+    };
+    GUI.prototype.getBottomBar = function () {
+        var self = this;
+        var $undo =  $('<button>', {'class': 'button', 'html': '<'}).click(self.game.history.undo.bind(self.game.history));
+        var $redo =  $('<button>', {'class': 'button', 'html': '>'}).click(self.game.history.redo.bind(self.game.history));
+        self.$bottomBar.html('').append($undo, $redo);
+        return self.$bottomBar;
     };
 
     GUI.prototype._buildMenu = function () {

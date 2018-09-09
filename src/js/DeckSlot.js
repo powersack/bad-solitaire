@@ -16,6 +16,9 @@
             self.$el.removeClass('slot-empty');
         });
     };
+    DeckSlot.prototype.determineAcception = function () {
+        return false;
+    };
 
     DeckSlot.prototype.createCards = function (cards) {
         if(typeof cards !== "object" || !cards.hasOwnProperty('colors') || !cards.hasOwnProperty('numbers')) {

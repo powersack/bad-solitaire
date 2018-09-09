@@ -13,6 +13,9 @@
     margin: 0;
     .unitize-min-height(@excel-card-height);
 
+    &.deck{
+      background: yellow;
+    }
     &.play-slot{
       border-color: white;
       .card{
@@ -30,13 +33,10 @@
     }
     &.draw-slot {
       border-color: white;
-      .unitize-width(246);
+      .unitize-width(245);
       .card{
         margin: 0 1px 0 1px !important;
       }
-    }
-    &.deck {
-      background: white;
     }
   }
   .card{

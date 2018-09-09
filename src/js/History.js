@@ -12,7 +12,11 @@
         if(self.pointer < self.records.length -1){
             self.records.length = self.pointer +1;
         }
-        var fromSlotLastCardStatus = card.slot.cards.length > 2 ? card.slot.cards[card.slot.cards.length -2].status : 2;
+        //TODO get the previous card status easier. eg by index
+        var fromSlotLastCardStatus =
+            card.slot.cards.length > 1 + card.attachedCards.length ?
+                card.slot.cards[card.slot.cards.length - (card.attachedCards.length + 2)].status : 2;
+        // var fromSlotLastCardStatus = card.index !== 0 ? card.slot.cards[card.index - 1].status : 2;
         self.records.push({
             card: card,
             fromSlot: card.slot,

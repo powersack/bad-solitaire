@@ -32,13 +32,17 @@
         var lastCard = self.getCard(self.cards.length - 1);
         if(!lastCard){
             self.acceptCard(card);
+            return true;
         } else if(card.slot && card.slot.id === self.id){
-            card.return();
+            self.rejectCard(card);
+            return false;
         } else {
             if(self.checkCardFit(card, lastCard)){
                 self.acceptCard(card);
+                return true;
             } else {
                 self.rejectCard(card);
+                return false;
             }
         }
     };
@@ -69,11 +73,13 @@
     Slot.prototype.addCard = function (card) {
         var self = this;
         card.return();
+        card.deselect();
         if(card.slot){
             card.slot.removeCard(card);
             card.slot.revealLastCard();
         }
         card.setSlot(self);
+        card.index = self.cards.length;
         self.cards.push(card);
         self.$el.append(card.$el);
         self.updateCards();

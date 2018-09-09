@@ -15,6 +15,10 @@
         self.$el.trigger('init', [self]);
     };
 
+    DrawSlot.prototype.determineAcception = function () {
+        return false;
+    };
+
     DrawSlot.prototype.updateCards = function () {
         var self = this;
         var i;

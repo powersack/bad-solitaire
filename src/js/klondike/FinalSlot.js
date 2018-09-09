@@ -16,13 +16,17 @@
         var lastCard = self.getCard(self.cards.length - 1);
         if(!lastCard && card.number === 0){
             self.acceptCard(card);
+            return true;
         } else if(card.slot && card.slot.id === self.id){
-            card.return();
+            self.rejectCard(card);
+            return false;
         } else {
             if(self.checkCardFit(card, lastCard)){
                 self.acceptCard(card);
+                return true;
             } else {
                 self.rejectCard(card);
+                return false;
             }
         }
     };

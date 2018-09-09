@@ -9,6 +9,7 @@
         self.slot = null;
         self.attachedCards = [];
         self._$values = [];
+        self.index = 0;
 
         bs._id.card++;
         self._init();

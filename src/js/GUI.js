@@ -21,7 +21,7 @@
         var $toggleMenu =  $('<button>', {'class': 'button', 'html': 'Neu'}).click(self.showMenu.bind(self));
         var $save =  $('<button>', {'class': 'button', 'html': 'Speichern'}).click(self.game.save.bind(self.game));
 
-        var themes = 'excel mac darkness';
+        var themes = 'excel mac darkness console';
         var $theme = $('<select class="theme-select">').change(function () {
             var $select = $(this);
             var $game = self.game.$el;
@@ -51,19 +51,19 @@
         var self = this;
         var $inner = $('<div>', {'class': 'menu-inner'});
 
-        var $startKlondike = $('<button>', {'class': 'button', 'html': 'Klondike'})
+        var $startKlondike = $('<button>', {'class': 'button menu-gamemode', 'html': 'Klondike'})
             .click(function () {
                 self.game.startGame('klondike');
                 self.hideMenu();
             });
 
-        var $startSpider = $('<button>', {'class': 'button', 'html': 'Spider'})
+        var $startSpider = $('<button>', {'class': 'button menu-gamemode', 'html': 'Spider'})
             .click(function () {
                 self.game.startGame('spider');
                 self.hideMenu();
             });
 
-        var $close = $('<button>', {'class': 'button', 'html': 'schliessen'})
+        var $close = $('<button>', {'class': 'button menu-close', 'html': 'x'})
             .click(function () {
                 self.hideMenu();
             });

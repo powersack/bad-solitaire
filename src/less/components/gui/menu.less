@@ -11,17 +11,28 @@
   align-items: center;
 
   .menu-inner{
+    position: relative;
     margin: 0 auto;
-    background: silver;
-    .unitize-min-width(500);
-    .unitize-min-height(300);
+    background: rgba(0,0,0,0.8);
+    .unitize-min-width(300);
+    .unitize-min-height(200);
     .unitize-padding(20,20);
     text-align: center;
   }
 
   .button{
     display: block;
-    .unitize-padding(5,15);
-    .unitize-margin(0,20);
+    .unitize-width(100);
+    margin: 0 auto 10px auto;
+
+    &.menu-close{
+      position: absolute;
+      width: auto;
+      margin: 0;
+      background: transparent;
+      color: white;
+      top: 0;
+      right: 0;
+    }
   }
 }

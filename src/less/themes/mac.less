@@ -15,4 +15,13 @@
       background: linear-gradient(@mac-card-backside, darken(@mac-card-backside, 5%));
     }
   }
+
+  select,
+  .button{
+    .unitize(border-radius, 5);
+    background: lighten(@button-bg, 10%);
+  }
+  .top-bar{
+    background: linear-gradient(@button-bg, lighten(@button-bg, 10%));
+  }
 }

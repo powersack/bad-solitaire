@@ -1,49 +1,53 @@
-@excel-card-backside: white;
-@excel-table-color: white;
+@console-card-backside: black;
+@console-table-color: black;
 
-@excel-card-width: 80;
-@excel-card-height: 20;
-.game.excel{
-  background: @excel-table-color;
+@console-card-width: 80;
+@console-card-height: 20;
+.game.console{
+  background: @console-table-color;
   .board{
     padding: 0;
   }
   .slot{
     padding: 0;
     margin: 0;
-    .unitize-min-height(@excel-card-height);
+    .unitize-min-height(@console-card-height);
     border-radius: 0;
+    border-color: white;
+    border-style: dotted;
+
     &.deck{
       border-radius: 0;
-      background: yellow;
+      background: @console-card-backside;
     }
     &.play-slot{
+      border: none;
       border-color: white;
       .card{
         margin: 0;
-        .unitize-height(@excel-card-height);
+        .unitize-height(@console-card-height);
       }
     }
 
     &.final-slot {
-      width: 78px;
-      margin-right: 2px;
       .card{
         border: none;
       }
     }
     &.draw-slot {
-      border: none;
-      .unitize-width(246);
+      border-color: white;
+      .unitize-width(240);
       .card{
-        margin: 0 1px 0 1px !important;
+        margin: 0;
       }
     }
   }
   .card{
-    background: @excel-card-backside;
+    background: @console-card-backside;
     border-radius: 0;
-    .unitize-height(@excel-card-height);
+    border-color: white;
+    border-style: dotted;
+    .unitize-height(@console-card-height);
 
     .card-icon{
       display: none !important;
@@ -68,8 +72,18 @@
       }
     }
 
-    &.ui-draggable-dragging{
-      background: yellow;
+
+    &.c0,
+    &.c2,
+    &.c1,
+    &.c3{
+      color: white;
     }
+  }
+  .button,
+  select{
+    background: @console-card-backside;
+    color: white;
+    font-family: monospace;
   }
 }

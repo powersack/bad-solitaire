@@ -10,6 +10,7 @@
         self.attachedCards = [];
         self._$values = [];
         self.index = 0;
+        self.canMove = false;
 
         bs._id.card++;
         self._init();
@@ -147,6 +148,7 @@
         var self = this;
         self.status = 1;
         self.$el.addClass('revealed');
+        self.$el.removeClass('hidden');
         self.$el.addClass('c'+self.color);
         self.$el.addClass('n'+self.number);
         self._appendValues();
@@ -158,6 +160,7 @@
         var self = this;
         self.status = 0;
         self.$el.removeClass('revealed');
+        self.$el.addClass('hidden');
         self.$el.removeClass('c'+self.color);
         self.$el.removeClass('n'+self.number);
         self._removeValues();
@@ -181,12 +184,16 @@
         var self = this;
         if(!self.$el.draggable) return;
         self.$el.draggable('enable');
+        self.$el.addClass('can-move');
+        self.canMove = true;
     };
 
     Card.prototype.disableDrag = function () {
         var self = this;
         if(!self.$el.draggable) return;
         self.$el.draggable('disable');
+        self.$el.removeClass('can-move');
+        self.canMove = false;
     };
 
     bs.Card = Card;

@@ -1,4 +1,11 @@
 .board{
+  position: absolute;
+  height: calc(~"100% - @{gui-space}px");
+  width: 100%;
+  .unitize(top, @top-bar-height);
+  left: 0;
+  overflow: auto;
+
   .clearfix;
   .unitize-padding(0,30,0,30);
 

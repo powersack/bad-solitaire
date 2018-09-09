@@ -6,6 +6,7 @@
   box-sizing: content-box;
   border: 1px solid darken(@table-color, 10%);
   .unitize-margin(0,10,20,0);
+  .unitize(border-radius,10);
 
   &.ui-droppable-hover{
     border-color: lighten(@table-color, 5%);
@@ -29,7 +30,14 @@
   &.play-slot{
     height: auto;
     .card{
-      .unitize(margin-top, (@card-height * -0.66666666));
+      .unitize(margin-top, (@card-height * -0.85));
+      &.revealed{
+        .unitize(margin-top, (@card-height * -0.66666666));
+      }
+      &.hidden + &.revealed{
+        .unitize(margin-top, (@card-height * -0.85));
+      }
+      &.revealed:first-child,
       &:first-child{
         margin-top: 0;
       }

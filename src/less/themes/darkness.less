@@ -1,0 +1,33 @@
+@darkness-card-backside: #181818;
+@darkness-table-color: #353535;
+
+.game.darkness{
+  background: radial-gradient(@darkness-card-backside, darken(@darkness-card-backside, 100%));
+  .card{
+    background: linear-gradient(@darkness-card-backside, darken(@darkness-card-backside, 100%));
+    border-color: @darkness-card-backside;
+    &.revealed{
+      background: #000;
+    }
+
+    &.c0,
+    &.c2{
+      color: #858585;
+      //background: linear-gradient(@card-black, lighten(@card-black, 30%));
+    }
+  }
+  .slot{
+    border-color: @darkness-card-backside;
+    &.ui-droppable-hover{
+      border-color: darken(@darkness-card-backside, 5%);
+    }
+    &.deck {
+      background: linear-gradient(@darkness-card-backside, darken(@darkness-card-backside, 100%));
+    }
+  }
+  select,
+  .button{
+    background: #000000;
+    color: #858585;
+  }
+}

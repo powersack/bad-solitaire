@@ -63,18 +63,20 @@
         var self = this;
         for(var type in self.board.slots) {
             self.board.slots[type].forEach(function (slot, index) {
+                if(slot.$el.droppable('instance')) slot.$el.droppable('disable');
                 slot.$el.click(function () {
                     if(self._selectedCard){
                         if(slot.determineAcception(self._selectedCard)){
                             self._selectedCard.deselect();
                             self._selectedCard = null;
                         }
-                        console.log('1')
                     }
                 });
 
                 slot.cards.forEach(function (card) {
+                    if(card.$el.draggable('instance')) card.$el.draggable('disable');
                     card.$el.click(function(){
+                        if(card.status !== 1 || !card.canMove) return;
                         if(self._selectedCard){
                             self._selectedCard.deselect();
                             if(!card.slot.determineAcception(self._selectedCard)){
@@ -85,15 +87,13 @@
                                 self._selectedCard = null;
                             }
                         } else {
-
                             self._selectedCard = card;
                             card.select();
                         }
-                        console.log('2')
                     })
                 })
-            })}
-
+            })
+        }
     };
     Game.prototype.save = function () {
         var self = this;
@@ -111,11 +111,15 @@
                 });
             });
         }
+
+        window.localStorage.setItem('theme', $('.theme-select').val());
         window.localStorage.setItem('saved-game', JSON.stringify(jsonObj));
     };
 
     Game.prototype.load = function () {
         var self = this;
+        var theme = window.localStorage.getItem('theme');
+        if(theme) $('.theme-select').val(theme).trigger('change');
         var json = window.localStorage.getItem('saved-game');
         if(!json) return;
         var jsonObj = $.parseJSON(json);

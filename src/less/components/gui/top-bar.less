@@ -1,3 +1,25 @@
 .top-bar{
-  .unitize-padding(0,0,20,0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  .unitize-height(@top-bar-height);
+
+  .button{
+    .unitize-margin(0,5,0,0);
+  }
+  select{
+    float: right;
+  }
+
+}
+.bottom-bar{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  .unitize-height(@bottom-bar-height);
+  .button{
+    float: right;
+  }
 }

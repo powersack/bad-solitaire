@@ -21,8 +21,8 @@
         var $toggleMenu =  $('<button>', {'class': 'button', 'html': 'Neu'}).click(self.showMenu.bind(self));
         var $save =  $('<button>', {'class': 'button', 'html': 'Speichern'}).click(self.game.save.bind(self.game));
 
-        var themes = 'excel mac';
-        var $theme = $('<select>').change(function () {
+        var themes = 'excel mac darkness';
+        var $theme = $('<select class="theme-select">').change(function () {
             var $select = $(this);
             var $game = self.game.$el;
             var val = $select.val();
@@ -43,7 +43,7 @@
         var self = this;
         var $undo =  $('<button>', {'class': 'button', 'html': '<'}).click(self.game.history.undo.bind(self.game.history));
         var $redo =  $('<button>', {'class': 'button', 'html': '>'}).click(self.game.history.redo.bind(self.game.history));
-        self.$bottomBar.html('').append($undo, $redo);
+        self.$bottomBar.html('').append($redo, $undo);
         return self.$bottomBar;
     };
 

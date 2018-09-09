@@ -1,8 +1,17 @@
 .button{
   display: inline-block;
-  .unitize-padding(5,15);
+  .unitize-padding(0,15);
   .transition(all 0.3s);
   cursor: pointer;
   max-width: 100%;
   text-align: center;
+  border: none;
+  background: rgb(221, 221, 221);
+  .unitize-height(@button-height);
+  .unitize(line-height, @button-height);
+}
+select{
+  .unitize-padding(5,15);
+  .unitize-height(@button-height);
+  background: rgb(221, 221, 221);
 }

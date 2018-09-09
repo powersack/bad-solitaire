@@ -22,11 +22,14 @@
         // self.initTouchControls();
         $(document).on('keydown', function (e) {
             if(self.history){
-                if(e.keyCode === 90 && e.ctrlKey){
+                if(e.keyCode === 90 && e.ctrlKey){ //z
                     self.history.undo();
                 }
-                if(e.keyCode === 89 && e.ctrlKey){
+                if(e.keyCode === 89 && e.ctrlKey){ //y
                     self.history.redo();
+                }
+                if(e.keyCode === 71 && e.ctrlKey){ //g
+                    if(self.gameType) self.startGame(self.gameType.type);
                 }
             }
         });
@@ -61,6 +64,7 @@
     };
     Game.prototype.initTouchControls = function () {
         var self = this;
+        bs.touchControls = true;
         for(var type in self.board.slots) {
             self.board.slots[type].forEach(function (slot, index) {
                 if(slot.$el.droppable('instance')) slot.$el.droppable('disable');

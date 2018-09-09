@@ -23,6 +23,7 @@
     &.play-slot{
       border: none;
       border-color: white;
+      margin-right: 2px;
       .card{
         margin: 0;
         .unitize-height(@console-card-height);
@@ -30,13 +31,15 @@
     }
 
     &.final-slot {
+      margin-right: 1px;
       .card{
         border: none;
       }
     }
     &.draw-slot {
       border-color: white;
-      .unitize-width(240);
+      .unitize-width(242);
+      border: none;
       .card{
         margin: 0;
       }
@@ -57,6 +60,8 @@
       .unitize(font-size, 16);
       position: relative;
       display: inline;
+      .unitize(margin-right, 2);
+
 
       &.top{
         left: auto;

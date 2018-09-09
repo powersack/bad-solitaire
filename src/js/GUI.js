@@ -38,6 +38,17 @@
         });
 
         self.$topBar.append($toggleMenu, $save, $theme);
+        if(document.webkitFullscreenEnabled){
+            var $fs = $('<button>', {'class': 'button fullscreen', 'html': '[ ]'});
+            $fs.click(function () {
+                if (document.webkitFullscreenElement) {
+                    document.webkitExitFullscreen();
+                } else {
+                    document.documentElement.webkitRequestFullscreen();
+                }
+            });
+            self.$topBar.append($fs);
+        }
     };
     GUI.prototype.getBottomBar = function () {
         var self = this;

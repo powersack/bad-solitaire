@@ -110,6 +110,7 @@ module.exports = function(grunt) {
                     'less',
                     'copy:images',
                     'copy:fonts',
+                    'copy:favicon',
                     'copy:html'
                 ]
             }
@@ -123,6 +124,7 @@ module.exports = function(grunt) {
             'less',
             'copy:images',
             'copy:fonts',
+            'copy:favicon',
             'copy:html',
             'watch'
         ]

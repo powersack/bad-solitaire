@@ -9,6 +9,8 @@
         self.gameType = null;
         self.history = new bs.History(self);
 
+        self._points = 500;
+
         self._init();
     };
 
@@ -21,6 +23,7 @@
         self.$el.append(self.gfx.$el);
         self.$el.append(self.board.$el);
         self.load();
+        self.initPoints();
         // self.initTouchControls();
         $document.on('keydown', function (e) {
             if(self.history && e.ctrlKey){
@@ -36,7 +39,6 @@
             // return "save?";
         });
     };
-
 
     Game.prototype.startGame = function (type, loadedSlots) {
         if(!type) return;
@@ -97,6 +99,25 @@
                 })
             })
         }
+    };
+
+    Game.prototype.initPoints = function () {
+        var self = this;
+        self.history.$el.on('undo redo', function () {
+            self._points -= 10;
+        });
+        for(var type in self.board.slots) {
+            self.board.slots[type].forEach(function (slot, index) {
+                slot.$el.on('accept', function () {
+                    self._points++;
+                });
+
+                slot.cards.forEach(function (card) {
+
+                });
+            });
+        }
+
     };
 
     Game.prototype.save = function () {

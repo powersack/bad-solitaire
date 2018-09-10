@@ -61,12 +61,10 @@
     Slot.prototype.acceptCard = function (card) {
         var self = this;
         self.$el.trigger('accept:before', [self, card]);
-        if(card.attachedCards.length){
-            var cards = card.attachedCards.concat(card);
-            self.addCards(cards);
-        } else {
-            self.addCard(card);
-        }
+
+        var cards = card.attachedCards.concat(card);
+        self.addCards(cards);
+
         self.$el.trigger('accept', [self, card]);
     };
 

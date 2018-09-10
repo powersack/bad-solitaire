@@ -78,18 +78,24 @@
         }
 
         slot.$el.click(function () {
-            var drawnCards = slot.drawCards(self.opts.slots);
-            var i;
-            if(drawnCards.length){
-                var records = [];
-                for(i=0 ;i<drawnCards.length;i++){
-                    records.push(self.game.history.getRecordObject(self.board.slots.play[i], drawnCards[i], true));
-                }
-                self.game.history.addRecords(records);
+            var check = true;
+            self.game.board.slots.play.forEach(function (slot) {
+                if(!slot.cards.length) check = false;
+            });
+            if(check){
+                var drawnCards = slot.drawCards(self.opts.slots);
+                var i;
+                if(drawnCards.length){
+                    var records = [];
+                    for(i=0 ;i<drawnCards.length;i++){
+                        records.push(self.game.history.getRecordObject(self.board.slots.play[i], drawnCards[i], true));
+                    }
+                    self.game.history.addRecords(records);
 
-                for(i=drawnCards.length-1;i>-1;i--){
-                    self.board.slots.play[i].addCard(drawnCards[i]);
-                    self.board.slots.play[i].revealLastCard();
+                    for(i=drawnCards.length-1;i>-1;i--){
+                        self.board.slots.play[i].addCard(drawnCards[i]);
+                        self.board.slots.play[i].revealLastCard();
+                    }
                 }
             }
         });

@@ -6,7 +6,15 @@
 .game.console{
   background: @console-table-color;
   .board{
-    padding: 0;
+    margin: 0;
+    width: 100%;
+
+    &.s10 .slot.draw-slot{
+      max-width: 18%;
+    }
+    &.s7 .slot.draw-slot{
+      max-width: 24%;
+    }
   }
   .slot{
     padding: 0;
@@ -23,25 +31,26 @@
     &.play-slot{
       border: none;
       border-color: white;
-      margin-right: 2px;
       .card{
+        width: 100%;
         margin: 0;
         .unitize-height(@console-card-height);
       }
     }
 
     &.final-slot {
-      margin-right: 1px;
       .card{
         border: none;
       }
     }
     &.draw-slot {
-      border-color: white;
-      .unitize-width(242);
       border: none;
+      .unitize-max-width(@card-width*2);
+      .unitize-width(@card-width*2);
       .card{
-        margin: 0;
+        margin: 0 !important;
+        width: 33%;
+        &.ui-draggable-dragging{width: 100%}
       }
     }
   }
@@ -79,10 +88,12 @@
 
 
     &.c0,
-    &.c2,
+    &.c2{
+      color: white;
+    }
     &.c1,
     &.c3{
-      color: white;
+      color: #ffeadf;
     }
   }
   .button,

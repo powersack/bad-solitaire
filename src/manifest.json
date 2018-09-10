@@ -1,0 +1,9 @@
+{
+  "short_name": "bs",
+  "name": "BS",
+  "icons": [
+  ],
+  "start_url": "/index.html",
+  "display": "fullscreen",
+  "orientation": "landscape"
+}

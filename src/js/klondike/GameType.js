@@ -46,6 +46,7 @@
         board.addSlots([self._createDrawSlot()], 'draw', 'top');
         board.addSlots(self._createFinalSlots(self.opts.cards.colors), 'final', 'top');
         board.addSlots(self._createSlots(self.opts.slots), 'play', 'center');
+        self.game.board.$el.addClass('s'+self.opts.slots);
 
         if(!self.loadedSlots){
             board.slots.deck[0].shuffle();

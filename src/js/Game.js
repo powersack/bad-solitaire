@@ -14,28 +14,26 @@
 
     Game.prototype._init = function () {
         var self = this;
+        var $window = $(window);
+        var $document = $(document);
         self.$el.append(self.GUI.$topBar);
         self.$el.append(self.GUI.$menu);
         self.$el.append(self.gfx.$el);
         self.$el.append(self.board.$el);
         self.load();
         // self.initTouchControls();
-        $(document).on('keydown', function (e) {
-            if(self.history){
-                if(e.keyCode === 90 && e.ctrlKey){ //z
-                    self.history.undo();
-                }
-                if(e.keyCode === 89 && e.ctrlKey){ //y
-                    self.history.redo();
-                }
-                if(e.keyCode === 71 && e.ctrlKey){ //g
-                    if(self.gameType) self.startGame(self.gameType.type);
+        $document.on('keydown', function (e) {
+            if(self.history && e.ctrlKey){
+                switch(e.keyCode){
+                    case 90: self.history.undo(); break; //z
+                    case 89: self.history.redo(); break;
+                    case 71: if(self.gameType) self.startGame(self.gameType.type); break;
                 }
             }
         });
-        $(window).on('beforeunload', function(){
+        $window.on('beforeunload', function(){
             setTimeout( self.save.bind(self), 0 );
-            // return "speichern?";
+            // return "save?";
         });
     };
 

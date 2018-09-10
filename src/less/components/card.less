@@ -9,8 +9,8 @@
 .card{
   position: relative;
   .unitize-height(@card-height);
-  .unitize-max-width(@card-width);
-  width: 100%;
+  width: 90%;
+  margin: 0 5%;
   border: 1px solid grey;
   .unitize(border-radius,5);
   color: @card-symbol-color;
@@ -50,8 +50,11 @@
     }
 
     &.card-icon{
-      top: 0;
-      .unitize(left, 15);
+      top: 50%;
+      font-weight: 100;
+      .unitize(margin-top, -54);
+      left: 50%;
+      .unitize(margin-left, -25);
       .unitize(font-size, 130);
       .unitize(line-height, 100);
       font-weight: 100;
@@ -74,7 +77,8 @@
   &.n0 {
     .card-icon{
       display: none;
-      .unitize(left, 8);
+      .unitize(margin-left, -30);
+      .unitize(margin-top, -60);
     }
     &.c0 .card-icon{
       display: block;

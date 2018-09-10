@@ -31,6 +31,7 @@
     Board.prototype.clearBoard = function (event, ui) {
         var self = this;
 
+        if(self.slots && self.slots.play) self.$el.removeClass('s'+self.slots.play.length);
         self.$top.html('');
         self.$bottom.html('');
         self.$center.html('');

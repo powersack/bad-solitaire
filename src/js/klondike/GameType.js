@@ -70,9 +70,19 @@
         }
         slot.$el.click(function () {
             var drawnCards = slot.drawCards(self.opts.drawCards).reverse();
+            var records = [];
             if(!drawnCards.length){
+                for(i=0 ;i<self.game.board.slots.draw[0].cards.length;i++){
+                    records.push(self.game.history.getRecordObject(slot, self.game.board.slots.draw[0].cards[i], true));
+                }
+                self.game.history.addRecords(records);
                 slot.addCards(self.game.board.slots.draw[0].cards);
+
             } else {
+                for(i=0 ;i<drawnCards.length;i++){
+                    records.unshift(self.game.history.getRecordObject(self.game.board.slots.draw[0], drawnCards[i], true));
+                }
+                self.game.history.addRecords(records);
                 self.game.board.slots.draw[0].addCards(drawnCards);
             }
         });

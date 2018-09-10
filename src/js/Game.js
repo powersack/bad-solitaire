@@ -26,8 +26,8 @@
             if(self.history && e.ctrlKey){
                 switch(e.keyCode){
                     case 90: self.history.undo(); break; //z
-                    case 89: self.history.redo(); break;
-                    case 71: if(self.gameType) self.startGame(self.gameType.type); break;
+                    case 89: self.history.redo(); break; //y
+                    case 71: if(self.gameType) self.startGame(self.gameType.type); break; //g
                 }
             }
         });
@@ -60,6 +60,7 @@
 
         self.$el.append(self.GUI.getBottomBar());
     };
+
     Game.prototype.initTouchControls = function () {
         var self = this;
         bs.touchControls = true;
@@ -97,6 +98,7 @@
             })
         }
     };
+
     Game.prototype.save = function () {
         var self = this;
         var jsonObj = {gameType: self.gameType.type, slots: {}};
@@ -122,6 +124,7 @@
         var self = this;
         var theme = window.localStorage.getItem('theme');
         if(theme) $('.theme-select').val(theme).trigger('change');
+
         var json = window.localStorage.getItem('saved-game');
         if(!json) return;
         var jsonObj = $.parseJSON(json);

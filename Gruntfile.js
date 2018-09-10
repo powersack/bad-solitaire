@@ -75,6 +75,12 @@ module.exports = function(grunt) {
                 src: 'index.html',
                 dest: 'dist/'
             },
+            manifest: {
+                expand: true,
+                cwd: 'src',
+                src: 'manifest.json',
+                dest: 'dist/'
+            },
             images: {
                 expand: true,
                 cwd: 'src/img',
@@ -111,6 +117,7 @@ module.exports = function(grunt) {
                     'copy:images',
                     'copy:fonts',
                     'copy:favicon',
+                    'copy:manifest',
                     'copy:html'
                 ]
             }
@@ -125,6 +132,7 @@ module.exports = function(grunt) {
             'copy:images',
             'copy:fonts',
             'copy:favicon',
+            'copy:manifest',
             'copy:html',
             'watch'
         ]

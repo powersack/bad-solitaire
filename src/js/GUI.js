@@ -1,4 +1,6 @@
 ;(function (bs, $) {
+    var THEMES = 'mac darkness tron rainbow excel console';
+
     var GUI = function (game) {
         var self = this;
         self.$el = $('<div>', {'class': 'gui'});
@@ -34,18 +36,18 @@
         var $save =  $('<button>', {'class': 'button', 'html': 'Speichern'}).click(self.game.save.bind(self.game));
         self.$pointDisplay = $('<span>', {'class': 'point-display'});
 
-        var themes = 'excel mac darkness console';
+
         self.$themeSelect = $('<select class="theme-select">').change(function () {
             var $select = $(this);
             var $game = self.game.$el;
             var val = $select.val();
-            $game.removeClass(themes);
+            $game.removeClass(THEMES);
             if(val !== 'reset'){
                 $game.addClass(val);
             }
         });
         self.$themeSelect.append($('<option>', {value: 'reset', html: 'Windows'}));
-        themes.split(' ').forEach(function (theme) {
+        THEMES.split(' ').forEach(function (theme) {
             var $opt = $('<option>', {value: theme, html: theme[0].toUpperCase() + theme.substring(1)});
             self.$themeSelect.append($opt);
         });

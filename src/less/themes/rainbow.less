@@ -1,0 +1,63 @@
+.rainbow-card-bg(){
+  background: #ff3232;
+  background: -moz-linear-gradient(-45deg, #ff3232 1%, #fff728 20%, #28ff28 40%, #3033ff 60%, #f728ff 80%, #ff0004 100%);
+  background: -webkit-linear-gradient(-45deg, #ff3232 1%,#fff728 20%,#28ff28 40%,#3033ff 60%,#f728ff 80%,#ff0004 100%);
+  background: linear-gradient(135deg, #ff3232 1%,#fff728 20%,#28ff28 40%,#3033ff 60%,#f728ff 80%,#ff0004 100%);
+}
+
+.game.rainbow{
+  background: #000;
+  .card{
+    .rainbow-card-bg;
+    border-color: #ffffff;
+    box-shadow: 0 3px 3px #fff728, 3px 0 3px #ff3232, -3px 0 3px #28FF28, 0 -3px 3px #f728ff;
+
+    &.revealed{
+      background: #000000;
+
+      &.c0,
+      &.c2{
+        box-shadow: 0 0 15px #ffffff;
+        border-color: #ffffff;
+      }
+      &.c1,
+      &.c3{
+        box-shadow: 0 0 15px red;
+        border-color: red;
+      }
+    }
+
+    .card-icon,
+    .card-number,
+    .card-color{
+      .rainbow-card-bg;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    &.ui-draggable-dragging{
+      box-shadow: 0 3px 15px #fff728, 3px 0 15px #ff3232, -3px 0 15px #28FF28, 0 -3px 15px #f728ff;
+    }
+  }
+  .slot{
+    border-color: transparent;
+    box-shadow: 0 0 10px #1e1e1e;
+    &.ui-droppable-hover{
+      box-shadow: 0 0 15px #2f2f2f;
+    }
+    &.deck {
+      .rainbow-card-bg;
+      box-shadow: 0 0 10px #1e1e1e;
+      &.slot-empty{
+        background: #000;
+      }
+    }
+  }
+  select,
+  .button{
+    .rainbow-card-bg;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0px 0px 1px white;
+  }
+}

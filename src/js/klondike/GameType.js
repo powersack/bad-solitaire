@@ -141,9 +141,30 @@
         var check = self.game.board.slots.final.every(function (slot) {
             return slot.cards.length === 13
         });
-        if(check) self.game.win();
+        if(check){
+            // self.game.win()
+            var current = self.game.board.slots.final[0].cards.length - 1;
+            self._winAnimation(current);
+        }
     };
 
+    GameType.prototype._winAnimation = function (current) {
+        var self = this;
+        var card = self.game.board.slots.final[0].cards[current];
+        var $card = card.$el;
+        console.log(current)
+
+        $card.animate({top:"+=100px"}, {
+            progress:function(){
+                $card.parent().append($card.clone());
+            },
+            complete:function () {
+                if(current > 0){
+                    self._winAnimation(current - 1);
+                }
+            }
+        });
+    };
 
     bs.klondike.GameType = GameType;
 }(bs, jQuery));

@@ -31,6 +31,7 @@
         self.records.push([self.getRecordObject(targetSlot, card)]);
 
         self.pointer++;
+        self.$el.trigger('add', [self, self.pointer]);
     };
 
     History.prototype.addRecords = function (records) {
@@ -38,6 +39,7 @@
         var self = this;
         self.records.push(records);
         self.pointer++;
+        self.$el.trigger('add', [self, self.pointer]);
     };
 
     History.prototype.undo = function () {

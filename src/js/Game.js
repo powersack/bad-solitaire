@@ -119,20 +119,18 @@
     Game.prototype.initScore = function () {
         var self = this;
         console.log(self.history.$el)
-        self.history.$el.on('undo redo', function () {
+        self.history.$el.on('undo redo add', function () {
             self.addScore(-1);
-            console.log(self._score)
         });
-        for(var type in self.board.slots) {
-            self.board.slots[type].forEach(function (slot, index) {
-                slot.cards.forEach(function (card) {
-                    card.$el.on('reveal', function () {
-                        if(card.virgin) self.addScore(1);
-                    });
-                });
-            });
-        }
-
+        // for(var type in self.board.slots) {
+        //     self.board.slots[type].forEach(function (slot, index) {
+        //         slot.cards.forEach(function (card) {
+        //             card.$el.on('reveal', function () {
+        //                 if(card.virgin) self.addScore(1);
+        //             });
+        //         });
+        //     });
+        // }
     };
 
     Game.prototype.save = function () {

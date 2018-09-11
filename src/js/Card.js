@@ -2,7 +2,7 @@
     var Card = function (color, number, status) {
         var self = this;
         self.id = bs._id.card;
-        self.$el = $('<div>', {'class': 'card'});
+        self.$el = $('<div>', {'class': 'card hidden'});
         self._color = color;
         self._number = number;
         self.status = status || 0;

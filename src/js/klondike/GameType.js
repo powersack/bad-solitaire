@@ -143,24 +143,36 @@
         });
         if(check){
             // self.game.win()
-            var current = self.game.board.slots.final[0].cards.length - 1;
-            self._winAnimation(current);
+            window.setTimeout(self._winAnimationSlot.bind(self, 0), 0);
+
         }
     };
 
-    GameType.prototype._winAnimation = function (current) {
+    GameType.prototype._winAnimationSlot = function (current) {
         var self = this;
-        var card = self.game.board.slots.final[0].cards[current];
-        var $card = card.$el;
-        console.log(current)
+        var slot = self.game.board.slots.final[current];
+        var currentCard = slot.cards.length - 1;
+        self._winAnimationCard(slot, currentCard, current);
 
-        $card.animate({top:"+=100px"}, {
-            progress:function(){
-                $card.parent().append($card.clone());
+    };
+
+    GameType.prototype._winAnimationCard = function (slot, current, currentSlot) {
+        var self = this;
+        var card = slot.cards[current];
+        var $card = card.$el;
+        // $card.removeClass('ui-draggable-dragging');
+        $card.animate({top:"+=100px", 'transform': 'rotate(-180deg)'}, {
+            progress:function(a, p , ms){
+                // if((p*10 % 2 === 0)){
+                //     console.log(p);
+                //     $card.parent().append($card.clone());
+                // }
             },
             complete:function () {
                 if(current > 0){
-                    self._winAnimation(current - 1);
+                    self._winAnimationCard(slot, current - 1, currentSlot);
+                } else if(currentSlot < self.game.board.slots.final.length - 1){
+                    self._winAnimationSlot(currentSlot + 1);
                 }
             }
         });

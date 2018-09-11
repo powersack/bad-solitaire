@@ -1,4 +1,3 @@
-
 .card-index(@counter) when (@counter > 0) {
   .card-index((@counter - 1));
   &:nth-last-child(@{counter}){
@@ -73,6 +72,12 @@
 
   &.selected{
     .transform(scale(1.2));
+  }
+
+  &.winning{
+    .transition(2s all);
+    //.transform(~"scale(1.5), rotate(180deg)");
+    .transform(rotate(360deg));
   }
 
   &.n0 {

@@ -192,7 +192,50 @@
 
     Game.prototype.win = function () {
         var self = this;
-        alert('you win ')
+        window.setTimeout(self._winAnimationSlot.bind(self, 0), 0);
+    };
+
+
+    Game.prototype._winAnimationSlot = function (current) {
+        var self = this;
+        var slot = self.board.slots.final[current];
+        var $slot = slot.$el;
+        var $window = $(window);
+        var currentCard = slot.cards.length - 1;
+        $slot.animate({
+            top: $window.height() / 2 - $slot.position().top - $slot.height(),
+            left: $window.width() / 2 - $slot.position().left - $slot.width()
+        }, {
+            complete: function () {
+                self._winAnimationCard(slot, currentCard, current);
+            }
+        });
+    };
+
+    Game.prototype._winAnimationCard = function (slot, current, currentSlot) {
+        var self = this;
+        var card = slot.cards[current];
+        var $card = card.$el;
+        var $window = $(window);
+        var top = Math.floor(Math.random() * $window.height() - ($window.height() / 2));
+        var left = Math.floor(Math.random() * $window.width() - ($window.width() / 2));
+        top = top < 0 ? top+100 : top-100;
+        left = left < 0 ? left+100 : left-100;
+
+        $card.removeClass('ui-draggable-dragging').css({
+            'transition': '1.25s all'
+        }).addClass('winning').animate({
+            top:"+=" + top + "px",
+            left:"+=" + left + "px"
+        }, {
+            complete:function () {
+                if(current > 0){
+                    self._winAnimationCard(slot, current - 1, currentSlot);
+                } else if(currentSlot < self.board.slots.final.length - 1){
+                    self._winAnimationSlot(currentSlot + 1);
+                }
+            }
+        });
     };
 
     bs.Game = Game;

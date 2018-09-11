@@ -2,11 +2,14 @@
 @tron-table-color: #353535;
 
 .game.tron{
-  background: #000;
+  //https://www.shutterstock.com/de/g/hunthomas
+  //https://www.shutterstock.com/de/image-vector/eps10-colorful-network-vector-design-88763785?irgwc=1&utm_medium=Affiliate&utm_campaign=TinEye&utm_source=77643&utm_term=
+  background: url("../img/tron.jpg") no-repeat center;
+  background-size: cover;
   .card{
     background: #000;
-    box-shadow: 0px 0px 14px #ebeb00;
-    border-color: #ebeb00;
+    box-shadow: 0px 0px 14px #00ebdc;
+    border-color: #00ebdc;
     &.revealed{
       background: #000;
     }
@@ -22,7 +25,7 @@
       text-shadow: 0px 0px 10px red;
     }
     &.ui-draggable-dragging{
-      box-shadow: 0px 0px 34px #ebeb00;
+      box-shadow: 0px 0px 34px #00ebdc;
     }
   }
   .slot{
@@ -31,9 +34,9 @@
       border-color: darken(@tron-card-backside, 5%);
     }
     &.deck {
-      background:  #ebeb00;
-      box-shadow: 0px 0px 14px #ebeb00;
-      border-color: #ebeb00;
+      background:  #00ebdc;
+      box-shadow: 0px 0px 14px #00ebdc;
+      border-color: #00ebdc;
       &.slot-empty{
         background: #000;
       }
@@ -42,7 +45,7 @@
   select,
   .button{
     background: #000000;
-    color: greenyellow;
-    text-shadow: 0px 0px 3px greenyellow;
+    color: #00ebdc;
+    text-shadow: 0px 0px 3px #00ebdc;
   }
 }

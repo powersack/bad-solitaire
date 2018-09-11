@@ -16,10 +16,8 @@
         self.opts = DEFAULTS;
         self.type = 'spider';
         self.loadedSlots = loadedSlots || null;
-
-        self.deckNo = 104 / (self.opts.cards.colors * self.opts.cards.numbers);
-
         self.setOpts(opts);
+        self.deckNo = 104 / (self.opts.cards.colors * self.opts.cards.numbers);
         self._init();
     };
 
@@ -36,7 +34,8 @@
                 numbers: opts.cards && opts.cards.numbers ? opts.cards.numbers : DEFAULTS.cards.numbers,
             },
             slots: opts.slots || DEFAULTS.slots
-        }
+        };
+        self.deckNo = 104 / (self.opts.cards.colors * self.opts.cards.numbers);
     };
 
     GameType.prototype.startGame = function () {

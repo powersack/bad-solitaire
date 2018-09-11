@@ -31,10 +31,14 @@
         margin: 0;
         .unitize-height(@excel-card-height);
       }
+      .card.hidden+.card.revealed{
+        margin: 0;
+      }
     }
 
     &.final-slot {
       .card{
+        margin: 0;
         border: none;
       }
     }
@@ -51,7 +55,8 @@
   .card{
     background: @excel-card-backside;
     border-radius: 0;
-    .unitize-height(@excel-card-height);
+    .unitize-height(@excel-card-height - 4);
+    .unitize-padding(2, 5);
 
     .card-icon{
       display: none !important;

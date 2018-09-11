@@ -36,10 +36,14 @@
         margin: 0;
         .unitize-height(@console-card-height);
       }
+      .card.hidden+.card.revealed{
+        margin: 0;
+      }
     }
 
     &.final-slot {
       .card{
+        margin: 0;
         border: none;
       }
     }
@@ -58,7 +62,8 @@
     border-radius: 0;
     border-color: white;
     border-style: dotted;
-    .unitize-height(@console-card-height);
+    .unitize-height(@console-card-height - 4);
+    .unitize-padding(2, 5);
 
     .card-icon{
       display: none !important;

@@ -142,40 +142,8 @@
             return slot.cards.length === 13
         });
         if(check){
-            // self.game.win()
-            window.setTimeout(self._winAnimationSlot.bind(self, 0), 0);
-
+            self.game.win()
         }
-    };
-
-    GameType.prototype._winAnimationSlot = function (current) {
-        var self = this;
-        var slot = self.game.board.slots.final[current];
-        var currentCard = slot.cards.length - 1;
-        self._winAnimationCard(slot, currentCard, current);
-
-    };
-
-    GameType.prototype._winAnimationCard = function (slot, current, currentSlot) {
-        var self = this;
-        var card = slot.cards[current];
-        var $card = card.$el;
-        // $card.removeClass('ui-draggable-dragging');
-        $card.animate({top:"+=100px", 'transform': 'rotate(-180deg)'}, {
-            progress:function(a, p , ms){
-                // if((p*10 % 2 === 0)){
-                //     console.log(p);
-                //     $card.parent().append($card.clone());
-                // }
-            },
-            complete:function () {
-                if(current > 0){
-                    self._winAnimationCard(slot, current - 1, currentSlot);
-                } else if(currentSlot < self.game.board.slots.final.length - 1){
-                    self._winAnimationSlot(currentSlot + 1);
-                }
-            }
-        });
     };
 
     bs.klondike.GameType = GameType;

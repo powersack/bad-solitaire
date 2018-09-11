@@ -52,7 +52,6 @@
             board.slots.deck[0].shuffle();
             board.slots.play.forEach(function (slot, index) {
                 var drawnCards = board.slots.deck[0].drawCards(index + 1);
-                // drawnCards = drawnCards.reverse();
                 slot.addCards(drawnCards);
                 slot.revealLastCard();
             });
@@ -70,7 +69,7 @@
         }
         slot.$el.click(function () {
             var drawnCards = slot.drawCards(self.opts.drawCards).reverse();
-            var records = [];
+            var records = [], i;
             if(!drawnCards.length){
                 for(i=0 ;i<self.game.board.slots.draw[0].cards.length;i++){
                     records.push(self.game.history.getRecordObject(slot, self.game.board.slots.draw[0].cards[i], true));

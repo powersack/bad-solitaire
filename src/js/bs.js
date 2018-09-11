@@ -13,6 +13,7 @@
     },
     _id: {
         card: 1,
-        slot: 1
+        slot: 1,
+        game: 1
     }
 };

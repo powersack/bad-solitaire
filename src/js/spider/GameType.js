@@ -17,8 +17,9 @@
         self.type = 'spider';
         self.loadedSlots = loadedSlots || null;
 
-        self.setOpts(opts);
         self.deckNo = 104 / (self.opts.cards.colors * self.opts.cards.numbers);
+
+        self.setOpts(opts);
         self._init();
     };
 
@@ -93,8 +94,8 @@
                     self.game.history.addRecords(records);
 
                     for(i=drawnCards.length-1;i>-1;i--){
+                        drawnCards[i].reveal();
                         self.board.slots.play[i].addCard(drawnCards[i]);
-                        self.board.slots.play[i].revealLastCard();
                     }
                 }
             }
@@ -132,6 +133,7 @@
             cards[i].disableDrag();
         }
         self._checkWin();
+        self.game.addScore(50);
     };
 
     GameType.prototype._checkWin = function () {

@@ -31,6 +31,7 @@ module.exports = function(grunt) {
                     'src/js/spider/GameType.js',
                     'src/js/History.js',
                     'src/js/Game.js',
+                    'src/js/GameManager.js',
                     'src/js/main.js'
                 ],
                 dest: 'dist/js/main.min.js'

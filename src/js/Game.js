@@ -9,7 +9,7 @@
         self.gameType = null;
         self.history = new bs.History(self);
 
-        self._points = 500;
+        self._score = 0;
 
         self._init();
     };
@@ -23,7 +23,6 @@
         self.$el.append(self.gfx.$el);
         self.$el.append(self.board.$el);
         self.load();
-        self.initPoints();
         // self.initTouchControls();
         $document.on('keydown', function (e) {
             if(self.history && e.ctrlKey){
@@ -40,13 +39,17 @@
         });
     };
 
-    Game.prototype.startGame = function (type, loadedSlots) {
+    Game.prototype.startGame = function (type, loadedSlots, gameOpts) {
         if(!type) return;
         var self = this;
+        var opts = gameOpts || self.GUI.getGameOpts(type);
+        self._score = 0;
+        self.addScore(500);
         self.board.clearBoard();
-        self.gameType = new bs[type].GameType(self, loadedSlots);
+        self.gameType = new bs[type].GameType(self, loadedSlots, opts);
         self.gameType.startGame();
         self.initHistory();
+        self.initScore();
     };
 
     Game.prototype.initHistory = function () {
@@ -101,19 +104,31 @@
         }
     };
 
-    Game.prototype.initPoints = function () {
+    Game.prototype.addScore = function (score) {
         var self = this;
+        self._score += score;
+        self.GUI.$pointDisplay.html(self._score);
+    };
+
+    Game.prototype.setScore = function (score) {
+        var self = this;
+        self._score = score;
+        self.GUI.$pointDisplay.html(self._score);
+    };
+
+    Game.prototype.initScore = function () {
+        var self = this;
+        console.log(self.history.$el)
         self.history.$el.on('undo redo', function () {
-            self._points -= 10;
+            self.addScore(-1);
+            console.log(self._score)
         });
         for(var type in self.board.slots) {
             self.board.slots[type].forEach(function (slot, index) {
-                slot.$el.on('accept', function () {
-                    self._points++;
-                });
-
                 slot.cards.forEach(function (card) {
-
+                    card.$el.on('reveal', function () {
+                        if(card.virgin) self.addScore(1);
+                    });
                 });
             });
         }
@@ -122,7 +137,13 @@
 
     Game.prototype.save = function () {
         var self = this;
-        var jsonObj = {gameType: self.gameType.type, slots: {}};
+        var jsonObj = {
+            gameType: self.gameType.type,
+            slots: {},
+            gameOpts: self.gameType.opts,
+            score: self._score,
+            theme: self.GUI.$themeSelect.val()
+        };
         for(var type in self.board.slots) {
             jsonObj.slots[type] = [];
             self.board.slots[type].forEach(function (slot, index) {
@@ -137,22 +158,23 @@
             });
         }
 
-        window.localStorage.setItem('theme', $('.theme-select').val());
         window.localStorage.setItem('saved-game', JSON.stringify(jsonObj));
     };
 
     Game.prototype.load = function () {
         var self = this;
-        var theme = window.localStorage.getItem('theme');
-        if(theme) $('.theme-select').val(theme).trigger('change');
-
         var json = window.localStorage.getItem('saved-game');
         if(!json) return;
+
+
         var jsonObj = $.parseJSON(json);
         var gameType = jsonObj.gameType;
         var slots = jsonObj.slots;
-        var slotsFilled = {};
+        var theme = jsonObj.theme;
+        var score = jsonObj.score;
+        var gameOpts = jsonObj.gameOpts;
 
+        var slotsFilled = {};
         for(var type in slots) {
             slotsFilled[type] = [];
             slots[type].forEach(function (slot, index) {
@@ -163,7 +185,10 @@
                 });
             });
         }
-        self.startGame(gameType, slotsFilled);
+
+        self.startGame(gameType, slotsFilled, gameOpts);
+        if(theme) self.GUI.$themeSelect.val(theme).trigger('change');
+        if(score) self.setScore(parseInt(score));
     };
 
 

@@ -11,6 +11,7 @@
         self._$values = [];
         self.index = 0;
         self.canMove = false;
+        self.virgin = true;
 
         bs._id.card++;
         self._init();
@@ -153,6 +154,7 @@
         self.$el.addClass('n'+self.number);
         self._appendValues();
         self.$el.trigger('reveal', [self]);
+        self.virgin = false;
         return self;
     };
 

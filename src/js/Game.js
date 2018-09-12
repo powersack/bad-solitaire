@@ -50,6 +50,7 @@
         self.gameType.startGame();
         self.initHistory();
         self.initScore();
+        self.initGfx();
     };
 
     Game.prototype.initHistory = function () {
@@ -118,7 +119,6 @@
 
     Game.prototype.initScore = function () {
         var self = this;
-        console.log(self.history.$el)
         self.history.$el.on('undo redo add', function () {
             self.addScore(-1);
         });
@@ -131,6 +131,20 @@
         //         });
         //     });
         // }
+    };
+
+    Game.prototype.initGfx = function () {
+        var self = this;
+
+        self.board.slots.play.forEach(function (slot) {
+            (function (slot) {
+                slot.$el.on('reject', function () {
+                    var pos = slot.$el.position();
+                    pos.left += slot.$el.width() / 4;
+                    self.gfx.text('Rejected', pos, 'cyan');
+                });
+            }(slot));
+        });
     };
 
     Game.prototype.save = function () {
@@ -192,9 +206,11 @@
 
     Game.prototype.win = function () {
         var self = this;
+        var slot = self.board.slots.final.forEach(function (slot) {
+            slot.$el.css('z-index', '0');
+        });
         window.setTimeout(self._winAnimationSlot.bind(self, 0), 0);
     };
-
 
     Game.prototype._winAnimationSlot = function (current) {
         var self = this;
@@ -202,7 +218,9 @@
         var $slot = slot.$el;
         var $window = $(window);
         var currentCard = slot.cards.length - 1;
-        $slot.animate({
+        $slot.css({
+            'z-index': (current + 1)
+        }).animate({
             top: $window.height() / 2 - $slot.position().top - $slot.height(),
             left: $window.width() / 2 - $slot.position().left - $slot.width()
         }, {
@@ -233,6 +251,8 @@
                     self._winAnimationCard(slot, current - 1, currentSlot);
                 } else if(currentSlot < self.board.slots.final.length - 1){
                     self._winAnimationSlot(currentSlot + 1);
+                } else {
+
                 }
             }
         });

@@ -110,11 +110,6 @@
                 slot.addCards(self.loadedSlots['play'][i]);
             }
             slots.push(slot);
-            // (function (slot) {
-            //     slot.$el.on('reject', function () {
-            //         self.game.gfx.text('Rejected', slot.$el.position());
-            //     });
-            // }(slot));
         }
         return slots;
     };
@@ -137,7 +132,6 @@
 
     GameType.prototype._checkWin = function () {
         var self = this;
-
         var check = self.game.board.slots.final.every(function (slot) {
             return slot.cards.length === 13
         });

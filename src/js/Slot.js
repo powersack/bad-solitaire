@@ -14,7 +14,7 @@
         self.$el.droppable({
             accept: '.card',
             drop: self.onDrop.bind(self),
-            tolerance: 'touch'
+            tolerance: 'pointer'
         });
         self.$el.trigger('init', [self]);
     };

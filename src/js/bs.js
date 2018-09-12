@@ -1,5 +1,6 @@
 ;window.bs = {
     touchControls: true,
+    themes: 'mac darkness tron rainbow excel console',
     strings: {
         cards:{
             //unicode

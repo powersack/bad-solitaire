@@ -97,12 +97,18 @@
                 self.hideMenu();
             });
 
+        self.$startPoker = $('<button>', {'class': 'button menu-gamemode', 'html': 'Poker'})
+            .click(function () {
+                self.game.startGame('poker');
+                self.hideMenu();
+            });
+
         self.$menuClose = $('<button>', {'class': 'button menu-close', 'html': 'x'})
             .click(function () {
                 self.hideMenu();
             });
 
-        $inner.append(self.$optKlondikeCards, self.$startKlondike, self.$optSpiderColors, self.$startSpider, self.$menuClose);
+        $inner.append(self.$optKlondikeCards, self.$startKlondike, self.$optSpiderColors, self.$startSpider, self.$startPoker, self.$menuClose);
         self.$menu.append($inner);
     };
 

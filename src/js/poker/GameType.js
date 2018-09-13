@@ -6,15 +6,18 @@
             colors: 4,
             numbers: 13
         },
-        players: 5
+        slots: 5
     };
 
-    var GameType = function (game) {
+    var GameType = function (game, loadedSlots, opts) {
         var self = this;
         self.game = game;
         self.opts = DEFAULTS;
         self.type = 'poker';
         self.loadedSlots = loadedSlots || null;
+
+        self.pot = 0;
+        self.currentDealer = 0;
 
         self.setOpts(opts);
         self._init();
@@ -25,13 +28,26 @@
         var self = this;
     };
 
+    GameType.prototype.setOpts = function (opts) {
+        if(!opts) return;
+        var self = this;
+        self.opts = {
+            cards: {
+                colors: opts.cards && opts.cards.colors ? opts.cards.colors : DEFAULTS.cards.colors,
+                numbers: opts.cards && opts.cards.numbers ? opts.cards.numbers : DEFAULTS.cards.numbers,
+            },
+            slots: opts.slots || DEFAULTS.slots
+        }
+    };
+
     GameType.prototype.startGame = function () {
         var self = this;
-        var board = self.board;
+        var board = self.game.board;
         board.addSlots([self._createDeck()], 'deck', 'top');
-        board.addSlots(self._createSlots(self.opts.players), 'play', 'top');
+        board.addSlots(self._createSlots(self.opts.slots), 'play', 'top');
+        board.addSlots([self._createPlayer()], 'player', 'bottom');
+        board.addSlots([self._createDrawSlot()], 'draw', 'center');
 
-        board.addSlots([new bs.poker.PlayerSlot()], 'player', 'bottom');
         if(!self.loadedSlots){
             board.slots.deck[0].shuffle();
             board.slots.play.forEach(function (slot, index) {
@@ -39,8 +55,17 @@
                 slot.addCards(drawnCards);
             });
 
-            board.slots.player.addCards(board.slots.deck[0].drawCards(2));
+            board.slots.player[0].addCards(board.slots.deck[0].drawCards(2));
+            board.slots.player[0].cards.forEach(function (card) {
+                card.reveal();
+            })
         }
+
+        board.slots.play.forEach(function (slot, index) {
+            var drawnCards = board.slots.deck[0].drawCards(2);
+            slot.addPokerControls();
+        });
+        board.slots.player[0].addPokerControls();
     };
 
     GameType.prototype._createDeck = function () {
@@ -51,6 +76,18 @@
         } else {
             slot.createCards(self.opts.cards);
         }
+        return slot;
+    };
+
+    GameType.prototype._createDrawSlot = function () {
+        var self = this;
+        var slot = new bs.poker.DrawSlot();
+
+        if(self.loadedSlots && self.loadedSlots['draw'] && self.loadedSlots['draw'][0]){
+            slot.addCards(self.loadedSlots['draw'][0]);
+        }
+
+        return slot;
     };
 
     GameType.prototype._createSlots = function (n) {
@@ -66,6 +103,18 @@
         }
         return slots;
     };
+
+    GameType.prototype._createPlayer = function () {
+        var self = this;
+        var slot = new bs.poker.PlayerSlot();
+
+        if(self.loadedSlots && self.loadedSlots['player'] && self.loadedSlots['player'][0]){
+            slot.addCards(self.loadedSlots['player'][0]);
+        }
+
+        return slot;
+    };
+
 
     bs.poker.GameType = GameType;
 }(bs, jQuery));

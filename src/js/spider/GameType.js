@@ -46,7 +46,6 @@
         board.addSlots(self._createSlots(self.opts.slots), 'play', 'center');
         self.game.board.$el.addClass('s'+self.opts.slots);
 
-        //TODO: load final slots
         if(self.loadedSlots && self.loadedSlots['final']){
             self.loadedSlots['final'].forEach(function (slot) {
                 self.createFinalSlot(null, slot);

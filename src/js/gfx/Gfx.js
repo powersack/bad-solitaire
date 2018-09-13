@@ -8,7 +8,6 @@
 
     Gfx.prototype.text = function (t, pos, color) {
         var self = this;
-        console.log(arguments);
         var text = new bs.gfx.Text(t, pos, color, 500);
         self.$el.append(text.$el);
         text.show();

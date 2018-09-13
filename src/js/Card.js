@@ -98,7 +98,7 @@
     Card.prototype.onDragStart = function (e,ui) {
         var self = this;
         self.attachedCards.forEach(function (card) {
-            card.$el.addClass('ui-draggable-dragging');
+            if(card.$el) card.$el.addClass('ui-draggable-dragging');
         });
         self.$el.trigger('dragstart', [self]);
     };
@@ -106,7 +106,7 @@
     Card.prototype.onDragStop = function (e,ui) {
         var self = this;
         self.attachedCards.forEach(function (card) {
-            card.$el.removeClass('ui-draggable-dragging');
+            if(card.$el) card.$el.removeClass('ui-draggable-dragging');
         });
     };
 

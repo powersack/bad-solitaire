@@ -42,7 +42,6 @@
         self._pos = pos;
 
         self.$el.css(pos);
-        console.log(self);
         return self;
     };
 
